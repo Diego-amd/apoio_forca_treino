@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "39480170999",
+    "project_id": "apoioforcatreino-27648",
+    "storage_bucket": "apoioforcatreino-27648.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39480170999:android:a067c4fb1ee87e7f48b6f2",
+        "android_client_info": {
+          "package_name": "com.example.apoio_forca_treino"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39480170999-hareappldfl2rn5aik25vcli4tkkrs1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCP5WPlf9kKAH3z5iZjO4VQzYz8kOjysnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39480170999-hareappldfl2rn5aik25vcli4tkkrs1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
