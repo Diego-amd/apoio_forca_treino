@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.apoio_forca_treino">
    <application
-        android:label="apoio_forca_treino"
+        android:label="Apoio de Força ao Treino"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
