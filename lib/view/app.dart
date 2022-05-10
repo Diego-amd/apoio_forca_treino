@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'login.view.dart';
 import 'alteracaoSenha.view.dart';
+import 'cad.exercicio.view.dart';
 
 class App extends StatelessWidget {
   final auth = FirebaseAuth.instance;
@@ -12,6 +13,7 @@ class App extends StatelessWidget {
     return MaterialApp(routes: {
       '/': (context) => LoginView(),
       '/alterarSenha': (context) => AlteracaoSenha(),
+      '/cadExercicio': (context) => CadastroExercicio(),
     }, initialRoute: '/');
   }
 }
