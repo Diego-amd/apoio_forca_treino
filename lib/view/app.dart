@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'login.view.dart';
+import 'alteracaoSenha.view.dart';
 
 class App extends StatelessWidget {
   final auth = FirebaseAuth.instance;
@@ -10,6 +11,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(routes: {
       '/': (context) => LoginView(),
-    }, initialRoute: auth.currentUser == null ? '/' : '/mensagens');
+      '/alterarSenha': (context) => AlteracaoSenha(),
+    }, initialRoute: '/');
   }
 }

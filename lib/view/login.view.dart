@@ -16,79 +16,157 @@ class LoginView extends StatelessWidget {
           await auth.signInWithEmailAndPassword(email: email, password: senha);
       // result.user!.updateDisplayName(displayName)
 
-      Navigator.of(context).pushNamed('/mensagens');
+      Navigator.of(context).pushNamed('/alterarSenha');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("images/login.png")),
-          ),
-          child: ListView(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 1,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    stops: [0.3, 1],
-                    colors: [
-                      Color.fromRGBO(6, 32, 41, 2),
-                      Color.fromARGB(0, 32, 41, 2),
-                    ],
-                  )),
+      body: Form(
+        key: formKey,
+        child: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("images/login.png"), fit: BoxFit.fill),
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0.4, 1],
+                  colors: [
+                    Color.fromRGBO(6, 32, 41, 2),
+                    Color.fromARGB(0, 32, 41, 2),
+                  ],
                 ),
               ),
-              const SizedBox(
-                  child: Text("BODY GOALS WORKOUT",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20,
-                      )))
-            ],
-          )),
-      // body: Form(
-      //   key: formKey,
-      //   child: Column(
-      //     children: [
-      //       TextFormField(
-      //         onSaved: (value) => email = value!,
-      //         validator: (value) {
-      //           if (value!.isEmpty) {
-      //             return "Campo e-mail obrigatório";
-      //           }
-      //           return null;
-      //         },
-      //       ),
-      //       TextFormField(
-      //         obscureText: true,
-      //         onSaved: (value) => senha = value!,
-      //         validator: (value) {
-      //           if (value!.isEmpty) {
-      //             return "Campo senha obrigatório";
-      //           }
-      //           return null;
-      //         },
-      //       ),
-      //       ElevatedButton(
-      //         onPressed: () => save(context),
-      //         child: Text("Entrar"),
-      //       ),
-      //       TextButton(
-      //         onPressed: () {
-      //           Navigator.of(context).pushNamed('/register');
-      //         },
-      //         child: Text("Registrar"),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 35),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 200),
+                      child: const Text("APOIO DE FORÇA AO TREINO",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+                    SizedBox(
+                      child: Container(
+                        width: 326,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 31),
+                        padding: EdgeInsets.only(left: 16),
+                        decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextFormField(
+                          // autofocus: true,
+                          onSaved: (value) => email = value!,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo e-mail é obrigatório!";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "E-mail",
+                            icon: Icon(Icons.email,
+                                size: 20, color: Colors.black38),
+                            labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      child: Container(
+                        width: 326,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 20),
+                        padding: EdgeInsets.only(left: 16),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextFormField(
+                          onSaved: (value) => senha = value!,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo senha é obrigatório!";
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Senha",
+                            icon: Icon(Icons.lock,
+                                size: 20, color: Colors.black38),
+                            labelStyle: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16),
+                          ),
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: SizedBox(
+                        child: TextButton(
+                          onPressed: () => {},
+                          child: const Text("Esqueceu a senha?",
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                        width: 326,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 20),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 245, 10),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextButton(
+                          child: const Text("Entrar",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black)),
+                          onPressed: () => save(context),
+                        )),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
