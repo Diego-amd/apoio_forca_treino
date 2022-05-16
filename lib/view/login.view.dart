@@ -13,14 +13,20 @@ class LoginView extends StatelessWidget {
 
   void validaLogin(BuildContext context) async {
     var aluno = await chamarAluno();
-    var professor = await chamarProfessor();
-    var admin = await chamarAdmin();
+    if (home == 0) {
+      var professor = await chamarProfessor();
+      if (home == 0) {
+        var admin = await chamarAdmin();
+      }
+    }
     if (home == 1) {
-      Navigator.of(context).pushNamed('/alterarSenha');
+      Navigator.of(context).pushNamed('/homealuno');
     } else if (home == 2) {
       Navigator.of(context).pushNamed('/homeprofessor');
     } else if (home == 3) {
       Navigator.of(context).pushNamed('/homeadmin');
+    } else if (home == 4) {
+      Navigator.of(context).pushNamed('/alterarSenha');
     } else {
       return print('Usuario não encontrado');
     }
@@ -49,7 +55,13 @@ class LoginView extends StatelessWidget {
 
     if (documents.length == 1) {
       //Navigator.of(context).pushNamed('/alterarSenha');
-      return home = 2;
+      var senha = await resultado.docs[0].data()['senha'];
+      if (senha == '123456') {
+        print(senha);
+        return home = 4;
+      } else {
+        return home = 2;
+      }
     }
     return home = 0;
   }
@@ -66,8 +78,12 @@ class LoginView extends StatelessWidget {
 
     if (documents.length == 1) {
       //Navigator.of(context).pushNamed('/alterarSenha');
-      var teste = resultado.docs[0].data()['uid'];
-      return home = 1;
+      var senha = await resultado.docs[0].data()['senha'];
+      if (senha == '123456') {
+        return home = 4;
+      } else {
+        return home = 1;
+      }
     }
     return home = 0;
   }
@@ -81,11 +97,14 @@ class LoginView extends StatelessWidget {
             .get());
 
     final List<DocumentSnapshot> documents = resultado.docs;
-
     if (documents.length == 1) {
       //Navigator.of(context).pushNamed('/alterarSenha');
-      var teste = resultado.docs[0].data()['uid'];
-      return home = 3;
+      var senha = await resultado.docs[0].data()['senha'];
+      if (senha == '123456') {
+        return home = 4;
+      } else {
+        return home = 3;
+      }
     }
     return home = 0;
   }

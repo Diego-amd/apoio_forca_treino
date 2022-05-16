@@ -26,7 +26,7 @@ class CadastroAluno extends StatelessWidget {
       await firestore.collection('alunos').add({
         "nomeCompleto": nomeText,
         "email": emailText,
-        "senhaCad": senhaText,
+        "senha": senhaText,
         "ativo": true,
         "uid": result.user!.uid,
       });

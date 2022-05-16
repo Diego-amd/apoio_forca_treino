@@ -6,6 +6,7 @@ import 'alteracaoSenha.view.dart';
 
 import 'home.admin.view.dart';
 import 'homeprofessor.dart';
+import 'home.aluno.view.dart';
 
 import 'cad.alunos.view.dart';
 import 'cad.professor.view.dart';
@@ -18,7 +19,8 @@ class App extends StatelessWidget {
     return MaterialApp(routes: {
       '/': (context) => LoginView(),
       '/alterarSenha': (context) => AlteracaoSenha(),
-      '/homeAdmin': (context) => HomeAdmin(),
+      '/homeadmin': (context) => HomeAdmin(),
+      '/homealuno': (context) => HomeAluno(),
       '/cadAluno': (context) => CadastroAluno(),
       '/cadProfessor': (context) => CadastroProfessor(),
       '/cadExercicio': (context) => CadastroExercicio(),
