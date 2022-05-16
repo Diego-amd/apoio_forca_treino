@@ -26,7 +26,7 @@ class LoginView extends StatelessWidget {
     } else if (home == 3) {
       Navigator.of(context).pushNamed('/homeAdmin');
     } else if (home == 4) {
-      Navigator.of(context).pushNamed('/alterarSenha');
+      Navigator.of(context).pushNamed('/cadExercicio');
     } else {
       return print('Usuario não encontrado');
     }

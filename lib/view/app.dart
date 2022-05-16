@@ -16,7 +16,11 @@ class App extends StatelessWidget {
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(routes: {
+    return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.yellow,
+      ),
+      routes: {
       '/': (context) => LoginView(),
       '/alterarSenha': (context) => AlteracaoSenha(),
       '/homeAdmin': (context) => HomeAdmin(),
