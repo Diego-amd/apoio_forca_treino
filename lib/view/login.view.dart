@@ -9,40 +9,90 @@ class LoginView extends StatelessWidget {
 
   String email = '';
   String senha = '';
+  int home = 0;
+
+  void validaLogin(BuildContext context) async {
+    var aluno = await chamarAluno();
+    var professor = await chamarProfessor();
+    var admin = await chamarAdmin();
+    if (home == 1) {
+      Navigator.of(context).pushNamed('/alterarSenha');
+    } else if (home == 2) {
+      Navigator.of(context).pushNamed('/homeprofessor');
+    } else if (home == 3) {
+      Navigator.of(context).pushNamed('/homeadmin');
+    } else {
+      return print('Usuario não encontrado');
+    }
+  }
 
   void save(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      // await auth.createUserWithEmailAndPassword(email: email, password: senha);
       var result =
           await auth.signInWithEmailAndPassword(email: email, password: senha);
-      // result.user!.updateDisplayName(displayName)
-      Navigator.of(context).pushNamed('/alterarSenha');
+      // Buscar dados
+      print(home);
+      validaLogin(context);
     }
   }
 
-  void teste(BuildContext context) async {
-    // await firestore.collection('conversas').add({
-    //   "data": DateTime.now(),
-    //   "uid": auth.currentUser!.uid,
-    //   "email": auth.currentUser!.email,
-    // });
-    print(email);
-    print(senha);
-    final QuerySnapshot result = await Future.value(firestore
-        .collection("professores")
-        .where("email", isEqualTo: "professor2@gmail.com")
-        .where("senha", isEqualTo: "123456")
-        .get());
+  chamarProfessor() async {
+    print('Entrou Professor');
+    final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
+        firestore
+            .collection("professores")
+            .where("uid", isEqualTo: auth.currentUser!.uid)
+            .get());
 
-    final List<DocumentSnapshot> documents = result.docs;
-    if (documents.length == 1 || documents.length >= 1) {
-      Navigator.of(context).pushNamed('/alterarSenha');
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      //Navigator.of(context).pushNamed('/alterarSenha');
+      return home = 2;
     }
+    return home = 0;
+  }
+
+  chamarAluno() async {
+    print('Entrou Aluno');
+    final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
+        firestore
+            .collection("alunos")
+            .where("uid", isEqualTo: auth.currentUser!.uid)
+            .get());
+
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      //Navigator.of(context).pushNamed('/alterarSenha');
+      var teste = resultado.docs[0].data()['uid'];
+      return home = 1;
+    }
+    return home = 0;
+  }
+
+  chamarAdmin() async {
+    print('Entrou Admin');
+    final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
+        firestore
+            .collection("admin")
+            .where("uid", isEqualTo: auth.currentUser!.uid)
+            .get());
+
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      //Navigator.of(context).pushNamed('/alterarSenha');
+      var teste = resultado.docs[0].data()['uid'];
+      return home = 3;
+    }
+    return home = 0;
   }
 
   @override
   Widget build(BuildContext context) {
+    validaLogin(context);
     return Scaffold(
       body: Form(
         key: formKey,
@@ -181,22 +231,6 @@ class LoginView extends StatelessWidget {
                                   color: Colors.black)),
                           onPressed: () => save(context),
                         )),
-                    Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 20),
-                        decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 255, 245, 10),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextButton(
-                          child: const Text("Teste",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.green)),
-                          onPressed: () => teste(context),
-                        ))
                   ],
                 ),
               ),
