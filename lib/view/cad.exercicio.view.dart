@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
+/*import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../widget/button.widget.dart';
-import '../api/firebase.api.dart';
-
-
+import '../api/firebase.api.dart';*/
 
 class CadastroExercicio extends StatelessWidget {
   @override
@@ -22,7 +20,8 @@ class CadastroExercicio extends StatelessWidget {
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
                   color: Color.fromARGB(255, 255, 255, 255))),
-          backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
+          backgroundColor: Color.fromARGB(253, 14, 57, 71)),
+      backgroundColor: Color.fromRGBO(6, 32, 41, 2),
       body: StreamBuilder(
         stream: snapshots,
         builder: (
@@ -56,26 +55,39 @@ class CadastroExercicio extends StatelessWidget {
             itemBuilder: (BuildContext context, int i) {
               var doc = snapshot.data!.docs[i];
               var value = doc.data;
-
               print('exercicios/${doc.reference.id}');
               return Container(
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(255, 233, 233, 233),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 margin: const EdgeInsets.all(5),
                 child: ListTile(
-                  //title: Text(value['nome']),
-                 // subtitle: Text(value['descricao']),
+                  title: Text(doc['nome']),
+                  subtitle: Text(doc['descricao']),
                   trailing: CircleAvatar(
-                    backgroundColor: Color.fromARGB(255, 255, 160, 44),
-                    foregroundColor: Color.fromARGB(255, 238, 255, 0),
+                    backgroundColor: Color.fromARGB(255, 233, 233, 233),
+                    foregroundColor: Color.fromARGB(255, 211, 230, 0),
                     child: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () => doc.reference.update({
+                        icon: Icon(Icons.delete),
+                        onPressed: () => {                           
+                               showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text("Exclusão"),
+                                  content: Text("Voce deseja realmente excluir este exercicio? Caso não queira, clicar fora da caixa de texto."),
+                                  actions: <Widget>[
+                                  
+                                  TextButton(onPressed: () => doc.reference.update({
                         'excluido': true,
-                      }),
-                    ),
+                      }), child: Text('Sim')) 
+                                  ]
+                              ),
+                            ),
+                          },
+                          
+                            
+                        ),
                   ),
                 ),
               );
@@ -84,6 +96,7 @@ class CadastroExercicio extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 211, 230, 0),
         onPressed: () => modalCreate(context),
         tooltip: 'Adicionar novo',
         child: Icon(Icons.add),
@@ -110,7 +123,7 @@ class CadastroExercicio extends StatelessWidget {
           content: Form(
             key: form,
             child: Container(
-              height: MediaQuery.of(context).size.height / 2,
+              height: MediaQuery.of(context).size.height / 3,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -121,7 +134,7 @@ class CadastroExercicio extends StatelessWidget {
                           color: Color.fromARGB(255, 255, 255, 255))),
                   TextFormField(
                     style: TextStyle(
-                        fontWeight: FontWeight.normal, color: Colors.white),
+                        fontWeight: FontWeight.normal, color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
@@ -141,16 +154,16 @@ class CadastroExercicio extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 20),
-                  Text('Foto',
+                  /*Text('Foto',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Color.fromARGB(255, 255, 255, 255))),
-                  //ButtonWidget(
-                    //text: 'Select File',
-                    //icon: Icons.attach_file,
-                    //onClicked: ,
-                  //),
+                  ButtonWidget(
+                    text: 'Select File',
+                    icon: Icons.attach_file,
+                    onClicked: ,
+                  ),*/
                   SizedBox(height: 20),
                   Text('Descrição',
                       style: TextStyle(
@@ -159,7 +172,7 @@ class CadastroExercicio extends StatelessWidget {
                           color: Color.fromARGB(255, 255, 255, 255))),
                   TextFormField(
                     style: TextStyle(
-                        fontWeight: FontWeight.normal, color: Colors.white),
+                        fontWeight: FontWeight.normal, color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
