@@ -1,5 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import '../widget/button.widget.dart';
+import '../api/firebase.api.dart';
+
+
 
 class CadastroExercicio extends StatelessWidget {
   @override
@@ -10,7 +16,13 @@ class CadastroExercicio extends StatelessWidget {
         .snapshots();
 
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 34, 29, 108),
+      appBar: AppBar(
+          title: Text("Cadastrar Exercicio",
+              style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromARGB(255, 255, 255, 255))),
+          backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
       body: StreamBuilder(
         stream: snapshots,
         builder: (
@@ -27,17 +39,23 @@ class CadastroExercicio extends StatelessWidget {
 
           if (snapshot.data!.docs.length == 0) {
             return Center(
-                child: Text(
-              'Nenhum exercicio ainda',
-              style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255), fontSize: 20),
-            ));
+                child: Container(
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("images/cadastro.png"),
+                          fit: BoxFit.fill),
+                    ),
+                    child: Text(
+                      'Nenhum exercicio ainda',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 20),
+                    )));
           }
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (BuildContext context, int i) {
               var doc = snapshot.data!.docs[i];
-              var item = doc.data;
+              var value = doc.data;
 
               print('exercicios/${doc.reference.id}');
               return Container(
@@ -47,8 +65,8 @@ class CadastroExercicio extends StatelessWidget {
                 ),
                 margin: const EdgeInsets.all(5),
                 child: ListTile(
-                  //title: Text(item['nome']),
-                  //subtitle: Text(item['descricao']),
+                  //title: Text(value['nome']),
+                 // subtitle: Text(value['descricao']),
                   trailing: CircleAvatar(
                     backgroundColor: Color.fromARGB(255, 255, 160, 44),
                     foregroundColor: Color.fromARGB(255, 238, 255, 0),
@@ -128,21 +146,11 @@ class CadastroExercicio extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Color.fromARGB(255, 255, 255, 255))),
-                  TextFormField(
-                    style: TextStyle(
-                        fontWeight: FontWeight.normal, color: Colors.white),
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      hintText: 'Inserir imagem',
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Color.fromARGB(255, 234, 255, 3)),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    controller: foto,
-                  ),
+                  //ButtonWidget(
+                    //text: 'Select File',
+                    //icon: Icons.attach_file,
+                    //onClicked: ,
+                  //),
                   SizedBox(height: 20),
                   Text('Descrição',
                       style: TextStyle(
