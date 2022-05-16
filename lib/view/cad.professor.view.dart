@@ -2,10 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class CadastroProfessor extends StatelessWidget {
+class CadastroProfessor extends StatefulWidget {
+  @override
+  _CadastroProfessor createState() => _CadastroProfessor();
+}
+
+class _CadastroProfessor extends State<CadastroProfessor> {
   var formKey = GlobalKey<FormState>();
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+
+  bool valorManha = false;
+  bool valorTarde = false;
+  bool valorNoite = false;
+
+  var manha;
+  var tarde;
+  var noite;
+
+  formataTexto() async {
+    manha = valorManha == true ? "Manhã" : "";
+    tarde = valorTarde == true ? "Tarde" : "";
+    noite = valorNoite == true ? "Noite" : "";
+
+    return "$manha / $tarde / $noite";
+  }
 
   TextEditingController nome = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -16,6 +37,8 @@ class CadastroProfessor extends StatelessWidget {
     var emailText = email.text;
     var senhaText = '123456';
 
+    var textoTurno = await formataTexto();
+
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var result = await auth.createUserWithEmailAndPassword(
@@ -23,10 +46,11 @@ class CadastroProfessor extends StatelessWidget {
 
       await result.user!.updateDisplayName(nomeText);
 
-      await firestore.collection('alunos').add({
+      await firestore.collection('professores').add({
         "nomeCompleto": nomeText,
         "email": emailText,
         "senhaCad": senhaText,
+        "turno": textoTurno,
         "uid": result.user!.uid,
       });
 
@@ -174,37 +198,52 @@ class CadastroProfessor extends StatelessWidget {
                     ),
                     SizedBox(
                       child: Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 20),
-                        padding: EdgeInsets.only(left: 16),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextFormField(
-                          controller: email,
-                          onSaved: (value) => {},
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Campo turno é obrigatório!";
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Turno",
-                            icon: Icon(Icons.assignment_turned_in_rounded,
-                                size: 20, color: Colors.black38),
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
-                          ),
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
+                          width: 326,
+                          margin: EdgeInsets.only(top: 20),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Column(
+                            children: [
+                              Container(
+                                  child: Text(
+                                      "Selecione o(s) turno(s) de trabalho")),
+                              CheckboxListTile(
+                                title: Text("Manhã"),
+                                secondary: Icon(Icons.access_time_filled),
+                                value: valorManha,
+                                onChanged: (value) {
+                                  setState(() {
+                                    valorManha = value!;
+                                  });
+                                },
+                                activeColor: Color.fromRGBO(6, 32, 41, 2),
+                              ),
+                              CheckboxListTile(
+                                title: Text("Tarde"),
+                                secondary: Icon(Icons.access_time_filled),
+                                value: valorTarde,
+                                onChanged: (value) {
+                                  setState(() {
+                                    valorTarde = value!;
+                                  });
+                                },
+                                activeColor: Color.fromRGBO(6, 32, 41, 2),
+                              ),
+                              CheckboxListTile(
+                                title: Text("Noite"),
+                                secondary: Icon(Icons.access_time_filled),
+                                value: valorNoite,
+                                onChanged: (value) {
+                                  setState(() {
+                                    valorNoite = value!;
+                                  });
+                                },
+                                activeColor: Color.fromRGBO(6, 32, 41, 2),
+                              ),
+                            ],
+                          )),
                     ),
                     Container(
                         width: 326,

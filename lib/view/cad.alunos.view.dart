@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class CadastroAluno extends StatelessWidget {
+class CadastroAluno extends StatefulWidget {
+  @override
+  _CadastroAlunoState createState() => _CadastroAlunoState();
+}
+
+class _CadastroAlunoState extends State<CadastroAluno> {
   var formKey = GlobalKey<FormState>();
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+
+  int checkedSexo = -1;
 
   TextEditingController nome = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -28,6 +35,7 @@ class CadastroAluno extends StatelessWidget {
         "email": emailText,
         "senha": senhaText,
         "ativo": true,
+        "sexo": checkedSexo == 1 ? "Feminino" : "Masculino",
         "uid": result.user!.uid,
       });
 
@@ -81,7 +89,6 @@ class CadastroAluno extends StatelessWidget {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: TextFormField(
-                          autofocus: true,
                           controller: nome,
                           onSaved: (value) => {},
                           validator: (value) {
@@ -173,6 +180,52 @@ class CadastroAluno extends StatelessWidget {
                           style: TextStyle(fontSize: 14),
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: ListTile(
+                            title: Text("Feminino"),
+                            leading: Radio(
+                              activeColor: Color.fromRGBO(6, 32, 41, 2),
+                              value: 1,
+                              groupValue: checkedSexo,
+                              onChanged: (valor) {
+                                setState(() {
+                                  checkedSexo = 1;
+                                });
+                              },
+                            ),
+                          )),
+                    ),
+                    SizedBox(
+                      child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: ListTile(
+                            title: Text("Masculino"),
+                            leading: Radio(
+                              activeColor: Color.fromRGBO(6, 32, 41, 2),
+                              value: 2,
+                              groupValue: checkedSexo,
+                              onChanged: (valor) {
+                                setState(() {
+                                  checkedSexo = 2;
+                                });
+                              },
+                            ),
+                          )),
                     ),
                     Container(
                         width: 326,

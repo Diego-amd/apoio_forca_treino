@@ -24,7 +24,7 @@ class LoginView extends StatelessWidget {
     } else if (home == 2) {
       Navigator.of(context).pushNamed('/homeprofessor');
     } else if (home == 3) {
-      Navigator.of(context).pushNamed('/homeadmin');
+      Navigator.of(context).pushNamed('/homeAdmin');
     } else if (home == 4) {
       Navigator.of(context).pushNamed('/alterarSenha');
     } else {
@@ -111,7 +111,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    validaLogin(context);
+    // validaLogin(context);
     return Scaffold(
       body: Form(
         key: formKey,
@@ -128,7 +128,7 @@ class LoginView extends StatelessWidget {
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  stops: [0.4, 1],
+                  stops: [0.5, 1],
                   colors: [
                     Color.fromRGBO(6, 32, 41, 2),
                     Color.fromARGB(0, 32, 41, 2),
@@ -144,8 +144,8 @@ class LoginView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 200),
-                      child: const Text("APOIO DE FORÇA AO TREINO",
+                      margin: EdgeInsets.only(top: 150),
+                      child: const Text("A F T",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
