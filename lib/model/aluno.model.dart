@@ -1,9 +1,9 @@
 class AlunoModel {
-  String nomeCompleto = '';
-  String email = '';
-  String senha = '';
-  bool ativo = true;
-  String sexo = '';
+  String? nomeCompleto;
+  String? email = '';
+  String? senha = '';
+  bool? ativo = true;
+  String? sexo = '';
 
   AlunoModel(this.nomeCompleto, this.email, this.senha, this.ativo, this.sexo);
 

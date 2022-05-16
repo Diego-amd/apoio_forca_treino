@@ -12,23 +12,29 @@ import 'cad.alunos.view.dart';
 import 'cad.professor.view.dart';
 import 'cad.exercicio.view.dart';
 
+import 'alunos.view.dart';
+import 'prof.view.dart';
+
 class App extends StatelessWidget {
   final auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.yellow,
-      ),
-      routes: {
-      '/': (context) => LoginView(),
-      '/alterarSenha': (context) => AlteracaoSenha(),
-      '/homeAdmin': (context) => HomeAdmin(),
-      '/homeAluno': (context) => HomeAluno(),
-      '/cadAluno': (context) => CadastroAluno(),
-      '/cadProfessor': (context) => CadastroProfessor(),
-      '/cadExercicio': (context) => CadastroExercicio(),
-      '/homeprofessor': (context) => HomeProfessor()
-    }, initialRoute: '/');
+        theme: ThemeData(
+          primaryColor: Colors.yellow,
+        ),
+        routes: {
+          '/': (context) => LoginView(),
+          '/alterarSenha': (context) => AlteracaoSenha(),
+          '/homeAdmin': (context) => HomeAdmin(),
+          '/homeAluno': (context) => HomeAluno(),
+          '/cadAluno': (context) => CadastroAluno(),
+          '/cadProfessor': (context) => CadastroProfessor(),
+          '/cadExercicio': (context) => CadastroExercicio(),
+          '/homeprofessor': (context) => HomeProfessor(),
+          '/alunosView': (context) => AlunoView(),
+          '/profView': (context) => ProfessorView(),
+        },
+        initialRoute: '/');
   }
 }

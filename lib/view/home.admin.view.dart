@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class HomeAdmin extends StatelessWidget {
   void CadastrarAluno(BuildContext context) {
-    Navigator.of(context).pushNamed('/cadAluno');
+    Navigator.of(context).pushNamed('/alunosView');
   }
 
   void CadastrarProfessor(BuildContext context) {
-    Navigator.of(context).pushNamed('/cadProfessor');
+    Navigator.of(context).pushNamed('/profView');
   }
 
   @override
@@ -14,6 +14,7 @@ class HomeAdmin extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Bem-vindo Admin!"),
+          backgroundColor: Color.fromRGBO(6, 32, 41, 2),
         ),
         body: Center(
           child: Column(
@@ -23,7 +24,7 @@ class HomeAdmin extends StatelessWidget {
               Container(
                 child: TextButton(
                     onPressed: () => CadastrarAluno(context),
-                    child: Text("Cadastrar aluno",
+                    child: Text("Alunos",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -32,7 +33,7 @@ class HomeAdmin extends StatelessWidget {
               Container(
                 child: TextButton(
                     onPressed: () => CadastrarProfessor(context),
-                    child: Text("Cadastrar professor",
+                    child: Text("Professores",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
