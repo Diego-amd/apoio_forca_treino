@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 
 import 'login.view.dart';
 import 'alteracaoSenha.view.dart';
+
 import 'home.admin.view.dart';
+import 'homeprofessor.dart';
+
 import 'cad.alunos.view.dart';
 import 'cad.professor.view.dart';
-import 'homeprofessor.dart';
+import 'cad.exercicio.view.dart';
 
 class App extends StatelessWidget {
   final auth = FirebaseAuth.instance;
@@ -18,6 +21,7 @@ class App extends StatelessWidget {
       '/homeAdmin': (context) => HomeAdmin(),
       '/cadAluno': (context) => CadastroAluno(),
       '/cadProfessor': (context) => CadastroProfessor(),
+      '/cadExercicio': (context) => CadastroExercicio(),
       '/homeprofessor': (context) => HomeProfessor()
     }, initialRoute: '/');
   }
