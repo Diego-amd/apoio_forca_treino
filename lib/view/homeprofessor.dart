@@ -41,7 +41,25 @@ class HomeProfessor extends StatelessWidget {
                 onPressed: () {
                   auth.signOut();
                   Navigator.of(context).pushReplacementNamed('/login');
-                }))
+                })),
+               Container(
+            width: 326,
+            height: 50,
+            margin: EdgeInsets.only(top: 20),
+            decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 255, 245, 10),
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: TextButton(
+                child: const Text("Cadastro Exercicios",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black)),
+                onPressed: () {
+                  auth.signOut();
+                  Navigator.of(context).pushReplacementNamed('/cadExercicio');
+                })) 
+
       ],
     ));
   }

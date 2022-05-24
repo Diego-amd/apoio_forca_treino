@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 /*import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -12,7 +13,6 @@ class CadastroExercicio extends StatelessWidget {
         .collection('exercicios')
         .where('excluido', isEqualTo: false)
         .snapshots();
-
     return Scaffold(
       appBar: AppBar(
           title: Text("Cadastrar Exercicio",
@@ -21,8 +21,30 @@ class CadastroExercicio extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   color: Color.fromARGB(255, 255, 255, 255))),
           backgroundColor: Color.fromARGB(253, 14, 57, 71)),
-      backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-      body: StreamBuilder(
+      body: Container(
+      
+ 
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("images/cadastro.png"), fit: BoxFit.fill),
+
+                gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [0.6, 1],
+                  colors: [
+                    Color.fromRGBO(6, 32, 41, 2),
+                    Color.fromARGB(0, 32, 41, 2),
+                  ],
+                  
+                ),
+              ),
+       
+        
+       
+
+        child: StreamBuilder(
+
         stream: snapshots,
         builder: (
           BuildContext context,
@@ -39,15 +61,10 @@ class CadastroExercicio extends StatelessWidget {
           if (snapshot.data!.docs.length == 0) {
             return Center(
                 child: Container(
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("images/cadastro.png"),
-                          fit: BoxFit.fill),
-                    ),
                     child: Text(
                       'Nenhum exercicio ainda',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0), fontSize: 20),
+                          color: Color.fromARGB(255, 255, 255, 255), fontSize: 20),
                     )));
           }
           return ListView.builder(
@@ -80,7 +97,9 @@ class CadastroExercicio extends StatelessWidget {
                                   
                                   TextButton(onPressed: () => doc.reference.update({
                         'excluido': true,
-                      }), child: Text('Sim')) 
+                      }), 
+                      child: Text('Sim')
+                      ) 
                                   ]
                               ),
                             ),
@@ -94,6 +113,8 @@ class CadastroExercicio extends StatelessWidget {
             },
           );
         },
+      ),
+      
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color.fromARGB(255, 211, 230, 0),
