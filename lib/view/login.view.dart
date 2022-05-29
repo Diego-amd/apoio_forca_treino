@@ -20,13 +20,13 @@ class LoginView extends StatelessWidget {
       }
     }
     if (home == 1) {
-      Navigator.of(context).pushNamed('/homealuno');
+      Navigator.of(context).pushReplacementNamed('/homealuno');
     } else if (home == 2) {
-      Navigator.of(context).pushNamed('/homeprofessor');
+      Navigator.of(context).pushReplacementNamed('/homeprofessor');
     } else if (home == 3) {
-      Navigator.of(context).pushNamed('/homeAdmin');
+      Navigator.of(context).pushReplacementNamed('/homeAdmin');
     } else if (home == 4) {
-      Navigator.of(context).pushNamed('/cadExercicio');
+      Navigator.of(context).pushReplacementNamed('/cadExercicio');
     } else {
       return print('Usuario não encontrado');
     }
@@ -115,146 +115,150 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: Form(
         key: formKey,
-        child: Stack(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("images/login.png"), fit: BoxFit.fill),
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  stops: [0.5, 1],
-                  colors: [
-                    Color.fromRGBO(6, 32, 41, 2),
-                    Color.fromARGB(0, 32, 41, 2),
-                  ],
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 1,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("images/login.png"), fit: BoxFit.fill),
                 ),
               ),
-            ),
-            Center(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 35),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 150),
-                      child: const Text("A F T",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
+              Container(
+                height: MediaQuery.of(context).size.height * 1,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    stops: [0.5, 1],
+                    colors: [
+                      Color.fromRGBO(6, 32, 41, 2),
+                      Color.fromARGB(0, 32, 41, 2),
+                    ],
+                  ),
+                ),
+              ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 35),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 400),
+                        child: const Text("A F T",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                      SizedBox(
+                        child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 31),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
+                            // autofocus: true,
+                            onSaved: (value) => email = value!,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Campo e-mail é obrigatório!";
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "E-mail",
+                              icon: Icon(Icons.email,
+                                  size: 20, color: Colors.black38),
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
+                            onSaved: (value) => senha = value!,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Campo senha é obrigatório!";
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Senha",
+                              icon: Icon(Icons.lock,
+                                  size: 20, color: Colors.black38),
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: SizedBox(
+                          child: TextButton(
+                            onPressed: () => {},
+                            child: const Text("Esqueceu a senha?",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700)),
+                          ),
+                        ),
+                      ),
+                      Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 35),
+                          decoration: const BoxDecoration(
+                              color: Color.fromARGB(255, 255, 245, 10),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextButton(
+                            child: const Text("Entrar",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black)),
+                            onPressed: () => save(context),
                           )),
-                    ),
-                    SizedBox(
-                      child: Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 31),
-                        padding: EdgeInsets.only(left: 16),
-                        decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextFormField(
-                          // autofocus: true,
-                          onSaved: (value) => email = value!,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Campo e-mail é obrigatório!";
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "E-mail",
-                            icon: Icon(Icons.email,
-                                size: 20, color: Colors.black38),
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
-                          ),
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      child: Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 20),
-                        padding: EdgeInsets.only(left: 16),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextFormField(
-                          onSaved: (value) => senha = value!,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "Campo senha é obrigatório!";
-                            }
-                            return null;
-                          },
-                          keyboardType: TextInputType.text,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Senha",
-                            icon: Icon(Icons.lock,
-                                size: 20, color: Colors.black38),
-                            labelStyle: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16),
-                          ),
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      alignment: Alignment.centerLeft,
-                      child: SizedBox(
-                        child: TextButton(
-                          onPressed: () => {},
-                          child: const Text("Esqueceu a senha?",
-                              textAlign: TextAlign.right,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700)),
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 20),
-                        decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 255, 245, 10),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextButton(
-                          child: const Text("Entrar",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black)),
-                          onPressed: () => save(context),
-                        )),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

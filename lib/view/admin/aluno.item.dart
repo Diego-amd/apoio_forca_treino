@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import '../model/aluno.model.dart';
-import '../model/professor.model.dart';
+import '../../model/aluno.model.dart';
 
-class ProfessorItem extends StatelessWidget {
-  final ProfessorModel model;
+class AlunoItem extends StatelessWidget {
+  final AlunoModel model;
 
-  ProfessorItem(this.model);
+  AlunoItem(this.model);
 
   @override
   Widget build(BuildContext context) {

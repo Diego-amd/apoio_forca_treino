@@ -1,8 +1,8 @@
-import 'package:apoio_forca_treino/view/prof.item.dart';
+import 'package:apoio_forca_treino/view/admin/prof.item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../model/professor.model.dart';
+import '../../model/professor.model.dart';
 
 class ProfessorView extends StatelessWidget {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
