@@ -17,7 +17,7 @@ class AlunoItem extends StatelessWidget {
             width: 55,
             height: 55,
             margin: EdgeInsets.fromLTRB(0, 5, 8, 0),
-            child: CircleAvatar(
+            child: const CircleAvatar(
                 backgroundColor: Color.fromRGBO(6, 32, 41, 2),
                 // backgroundImage: NetworkImage(""),
                 child: Icon(Icons.person, color: Colors.white)),
@@ -29,7 +29,7 @@ class AlunoItem extends StatelessWidget {
                 children: [
                   Text(
                     model.nomeCompleto!.toUpperCase(),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),

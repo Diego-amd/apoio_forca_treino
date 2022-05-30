@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-/*import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import '../widget/button.widget.dart';
-import '../api/firebase.api.dart';*/
 
 class CadastroExercicio extends StatelessWidget {
   @override
@@ -80,18 +76,16 @@ class CadastroExercicio extends StatelessWidget {
                     margin: const EdgeInsets.all(5),
                     child: ListTile(
                       title: Text(doc['nome']),
-                      
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                        Text(doc['descricao']),
-                        Text(doc['tipo'],
-                            style: TextStyle(
-                              fontWeight: FontWeight. bold
-                            ),),
-                      ],
-                    ),
-
+                          Text(doc['descricao']),
+                          Text(
+                            doc['tipo'],
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
                       trailing: CircleAvatar(
                         backgroundColor: Color.fromARGB(255, 233, 233, 233),
                         foregroundColor: Color.fromARGB(255, 224, 0, 0),
@@ -242,7 +236,7 @@ class CadastroExercicio extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: Color.fromARGB(255, 255, 255, 255))),
                   TextFormField(
-                     style: TextStyle(
+                    style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(

@@ -20,9 +20,9 @@ class LoginView extends StatelessWidget {
       }
     }
     if (home == 1) {
-      Navigator.of(context).pushReplacementNamed('/homealuno');
+      Navigator.of(context).pushReplacementNamed('/homeAluno');
     } else if (home == 2) {
-      Navigator.of(context).pushReplacementNamed('/homeprofessor');
+      Navigator.of(context).pushReplacementNamed('/homeProfessor');
     } else if (home == 3) {
       Navigator.of(context).pushReplacementNamed('/homeAdmin');
     } else if (home == 4) {
@@ -100,6 +100,7 @@ class LoginView extends StatelessWidget {
     if (documents.length == 1) {
       //Navigator.of(context).pushNamed('/alterarSenha');
       var senha = await resultado.docs[0].data()['senha'];
+      var nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
       if (senha == '123456') {
         return home = 4;
       } else {
@@ -122,7 +123,8 @@ class LoginView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 1,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("images/login.png"), fit: BoxFit.fill),
+                      image: AssetImage("images/login.png"),
+                      fit: BoxFit.fitHeight),
                 ),
               ),
               Container(

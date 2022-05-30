@@ -5,7 +5,7 @@ import 'login.view.dart';
 import 'alteracaoSenha.view.dart';
 
 import 'admin/home.admin.view.dart';
-import 'professor/homeprofessor.dart';
+import 'professor/home.professor.view.dart';
 import 'alunos/home.aluno.view.dart';
 
 import 'admin/cad.alunos.view.dart';
@@ -31,7 +31,7 @@ class App extends StatelessWidget {
           '/cadAluno': (context) => CadastroAluno(),
           '/cadProfessor': (context) => CadastroProfessor(),
           '/cadExercicio': (context) => CadastroExercicio(),
-          '/homeprofessor': (context) => HomeProfessor(),
+          '/homeProfessor': (context) => HomeProfessor(),
           '/alunosView': (context) => AlunoView(),
           '/profView': (context) => ProfessorView(),
         },
