@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginView extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -10,13 +11,25 @@ class LoginView extends StatelessWidget {
   String email = '';
   String senha = '';
   int home = 0;
+  String colecao = '';
+  String documento = '';
+  // 0 = Login
+  // 1 = Aluno
+  // 2 = Professor
+  // 3 = Admin
+  // 4 = Primeiro acesso/Alterar senha
 
   void validaLogin(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+
     var aluno = await chamarAluno();
+    colecao = "alunos";
     if (home == 0) {
       var professor = await chamarProfessor();
+      colecao = "professores";
       if (home == 0) {
         var admin = await chamarAdmin();
+        colecao = "admin";
       }
     }
     if (home == 1) {
@@ -26,10 +39,12 @@ class LoginView extends StatelessWidget {
     } else if (home == 3) {
       Navigator.of(context).pushReplacementNamed('/homeAdmin');
     } else if (home == 4) {
-      Navigator.of(context).pushReplacementNamed('/cadExercicio');
+      Navigator.of(context).pushReplacementNamed('/alterarSenha',
+          arguments: {'colecao': colecao, 'documento': documento});
     } else {
       return print('Usuario não encontrado');
     }
+    await prefs.setInt('tipoUsuario', home);
   }
 
   void save(BuildContext context) async {
@@ -50,10 +65,10 @@ class LoginView extends StatelessWidget {
             .collection("professores")
             .where("uid", isEqualTo: auth.currentUser!.uid)
             .get());
-
     final List<DocumentSnapshot> documents = resultado.docs;
 
     if (documents.length == 1) {
+      documento = resultado.docs[0].id;
       //Navigator.of(context).pushNamed('/alterarSenha');
       var senha = await resultado.docs[0].data()['senha'];
       if (senha == '123456') {
@@ -77,7 +92,7 @@ class LoginView extends StatelessWidget {
     final List<DocumentSnapshot> documents = resultado.docs;
 
     if (documents.length == 1) {
-      //Navigator.of(context).pushNamed('/alterarSenha');
+      documento = resultado.docs[0].id;
       var senha = await resultado.docs[0].data()['senha'];
       if (senha == '123456') {
         return home = 4;
@@ -97,7 +112,9 @@ class LoginView extends StatelessWidget {
             .get());
 
     final List<DocumentSnapshot> documents = resultado.docs;
+
     if (documents.length == 1) {
+      documento = resultado.docs[0].id;
       //Navigator.of(context).pushNamed('/alterarSenha');
       var senha = await resultado.docs[0].data()['senha'];
       var nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
