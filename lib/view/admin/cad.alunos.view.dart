@@ -47,7 +47,7 @@ class _CadastroAlunoState extends State<CadastroAluno> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Cadastrar Aluno"),
+          title: Text("Cadastrar aluno"),
           backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
       body: Form(
         key: formKey,

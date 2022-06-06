@@ -13,9 +13,6 @@ class _HomeAdmin extends State<HomeAdmin> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection('admin');
-
   getDadosFirebase() async {
     final QuerySnapshot<Map<String, dynamic>> resultado =
         await Future.value(firestore.collection("admin").get());
@@ -24,9 +21,12 @@ class _HomeAdmin extends State<HomeAdmin> {
     if (documents.length == 1) {
       //Navigator.of(context).pushNamed('/alterarSenha');
       nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
-      setState(() {
-        nomeEmpresa = nomeEmpresa;
-      });
+
+      if (this.mounted) {
+        setState(() {
+          nomeEmpresa = nomeEmpresa;
+        });
+      }
     }
   }
 
@@ -58,7 +58,7 @@ class _HomeAdmin extends State<HomeAdmin> {
               ))
         ],
         title: Container(
-          margin: EdgeInsets.only(left: 25),
+          margin: EdgeInsets.only(left: 10),
           child: Row(
             children: [
               const Text("Bem-vindo, ", style: TextStyle(fontSize: 24)),

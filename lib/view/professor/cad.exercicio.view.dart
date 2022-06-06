@@ -13,12 +13,12 @@ class CadastroExercicio extends StatelessWidget {
       //Background e appBar
 
       appBar: AppBar(
-          title: Text("Cadastrar Exercicio",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Color.fromARGB(255, 255, 255, 255))),
-          backgroundColor: Color.fromARGB(253, 14, 57, 71)),
+        toolbarHeight: 80,
+        title: Text("Cadastrar exercício"),
+        backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+        elevation: 15,
+        shadowColor: Color.fromRGBO(6, 32, 41, 2),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(

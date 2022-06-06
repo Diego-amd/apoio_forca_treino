@@ -62,8 +62,12 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Cadastrar professor"),
-          backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
+        toolbarHeight: 80,
+        title: Text("Cadastrar professor"),
+        backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+        elevation: 15,
+        shadowColor: Color.fromRGBO(6, 32, 41, 2),
+      ),
       body: Form(
         key: formKey,
         child: SingleChildScrollView(
@@ -103,7 +107,7 @@ class _CadastroProfessor extends State<CadastroProfessor> {
                           width: 326,
                           height: 50,
                           padding: EdgeInsets.only(left: 16),
-                          margin: EdgeInsets.only(top: 150),
+                          margin: EdgeInsets.only(top: 50),
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
