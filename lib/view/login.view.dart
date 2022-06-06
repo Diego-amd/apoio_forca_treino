@@ -166,7 +166,7 @@ class LoginView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 400),
+                        margin: EdgeInsets.only(top: 350),
                         child: const Text("A F T",
                             style: TextStyle(
                               color: Colors.white,
