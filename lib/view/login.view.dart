@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  @override
+  _LoginView createState() => _LoginView();
+}
+
+class _LoginView extends State<LoginView> {
   var formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -13,6 +18,11 @@ class LoginView extends StatelessWidget {
   int home = 0;
   String colecao = '';
   String documento = '';
+  bool loading = false;
+  bool erro = false;
+  bool erroSenha = false;
+  String msg = "";
+  String msgSenha = "";
   // 0 = Login
   // 1 = Aluno
   // 2 = Professor
@@ -48,6 +58,9 @@ class LoginView extends StatelessWidget {
   }
 
   void save(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var result =
@@ -166,7 +179,7 @@ class LoginView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(top: 350),
+                        margin: EdgeInsets.only(top: 300),
                         child: const Text("A F T",
                             style: TextStyle(
                               color: Colors.white,
@@ -180,16 +193,21 @@ class LoginView extends StatelessWidget {
                           height: 50,
                           margin: EdgeInsets.only(top: 31),
                           padding: EdgeInsets.only(left: 16),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            border: erro ? Border.all(color: Colors.red) : null,
+                          ),
                           child: TextFormField(
-                            // autofocus: true,
+                            onChanged: (value) => erro = false,
                             onSaved: (value) => email = value!,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Campo e-mail é obrigatório!";
+                                loading = false;
+                                erro = true;
+                                msg = "Campo e-mail é obrigatório!";
                               }
                               return null;
                             },
@@ -208,21 +226,40 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      erro
+                          ? Container(
+                              margin: EdgeInsets.only(top: 3, bottom: 0),
+                              child: Text(msg,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.red,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                       SizedBox(
                         child: Container(
                           width: 326,
                           height: 50,
-                          margin: EdgeInsets.only(top: 20),
+                          margin: EdgeInsets.only(top: 15),
                           padding: EdgeInsets.only(left: 16),
                           decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            border: erroSenha
+                                ? Border.all(color: Colors.red)
+                                : null,
+                          ),
                           child: TextFormField(
+                            onChanged: (value) => erroSenha = false,
                             onSaved: (value) => senha = value!,
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return "Campo senha é obrigatório!";
+                                loading = false;
+                                erroSenha = true;
+                                msgSenha = "Campo senha é obrigatório!";
+                                return "";
                               }
                               return null;
                             },
@@ -242,6 +279,16 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      erroSenha
+                          ? Container(
+                              margin: EdgeInsets.only(top: 3, bottom: 0),
+                              child: Text(msgSenha,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.red,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: SizedBox(
@@ -256,22 +303,25 @@ class LoginView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                          width: 326,
-                          height: 50,
-                          margin: EdgeInsets.only(top: 35),
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 245, 10),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextButton(
-                            child: const Text("Entrar",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                            onPressed: () => save(context),
-                          )),
+                      loading
+                          ? const CircularProgressIndicator(
+                              color: Color.fromARGB(255, 235, 213, 16))
+                          : Container(
+                              width: 326,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 35),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 245, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: TextButton(
+                                child: const Text("Entrar",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black)),
+                                onPressed: () => save(context),
+                              )),
                     ],
                   ),
                 ),
