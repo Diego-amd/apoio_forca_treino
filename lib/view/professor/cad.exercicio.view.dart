@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+/*import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import '../widget/button.widget.dart';
+import '../api/firebase.api.dart';*/
 
 class CadastroExercicio extends StatelessWidget {
   @override
@@ -79,19 +83,181 @@ class CadastroExercicio extends StatelessWidget {
                       subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(doc['descricao']),
-                          Text(
-                            doc['tipo'],
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                        Text(doc['descricao']),
+                        Text(doc['tipo'],
+                            style: TextStyle(
+                              fontWeight: FontWeight. bold
+                            ),),
+                      ],
+                    ),
+
+                      //Botão de excluir os exercicios
+
+                      trailing: Wrap( children: <Widget> [
+                        
+                        CircleAvatar(
+                        backgroundColor: Color.fromARGB(255, 233, 233, 233),
+                        foregroundColor: Color.fromARGB(255, 11, 20, 80),
+                        child: IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () => {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  
+                                    contentPadding: EdgeInsets.only(top: 5.0),
+                                    backgroundColor:
+                                        Color.fromARGB(255, 15, 19, 100),
+                                    title: Text(
+                                      "Altereação de exercicio",
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          fontSize: 20),
+                                    ),
+                                    content: Form(
+                                      child: Container(
+                                        height: 350,
+                                        width: 20,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            SizedBox(height: 10),
+                                            Text(doc['nome'],
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color.fromARGB(255, 255, 255, 255))),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                              decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                hintText: ('Ex.: Agachamento'),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Este campo não pode ser vazio';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                            Text(doc['tipo'],
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color.fromARGB(255, 255, 255, 255))),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                              decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                hintText: ('Ex.: Costa, Peito, Ombro  '),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                              validator: (value) {
+                                                if (value!.isEmpty) {
+                                                  return 'Este campo não pode ser vazio';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                              width: 40,
+                                            ),
+                                            Text(doc['descricao'],
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Color.fromARGB(255, 255, 255, 255))),
+                                            TextFormField(
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  color: Color.fromARGB(255, 0, 0, 0)),
+                                              decoration: InputDecoration(
+                                                fillColor: Colors.white,
+                                                filled: true,
+                                                contentPadding: const EdgeInsets.symmetric(
+                                                    vertical: 35.0, horizontal: 10.0),
+                                                hintText: '(Opcional)',
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Color.fromARGB(255, 255, 255, 255)),
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      SizedBox(
+                                        child: TextButton(
+                                          child: Container(
+                                            child: Text(
+                                              'Cancelar',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 255, 255),
+                                                  fontSize: 15),
+                                            ),
+                                          ),
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        child: TextButton(
+                                            child: Container(
+                                              child: Text(
+                                                'Salvar',
+                                                style: TextStyle(
+                                                    color: Color.fromARGB(
+                                                        255, 255, 255, 255),
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            onPressed: () async {
+                                              {
+                                                doc.reference.update({
+                                                doc['nome']: doc['nome'],
+                                                doc['tipo']: doc['tipo'],
+                                                doc['descrição']: doc['descrição'],
+                                                'excluido': false,
+                                              });
+
+                                                Navigator.of(context).pop();
+                                              }
+                                            },
+                                          ),
+                                      ),
+                                    ]);
+                              },
+                            
+                            ),
+                          },
+                        ),
                       ),
-                      trailing: CircleAvatar(
+                      CircleAvatar(
                         backgroundColor: Color.fromARGB(255, 233, 233, 233),
                         foregroundColor: Color.fromARGB(255, 224, 0, 0),
-
-                        //Botão de excluir os exercicios
-
                         child: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () => {
@@ -143,15 +309,18 @@ class CadastroExercicio extends StatelessWidget {
                                               });
 
                                               Navigator.of(context).pop();
-                                            }),
-                                      ),
-                                    ]);
+                                      }),
+                                    ),
+                                ]);
+                              
                               },
                             ),
                           },
                         ),
                       ),
-                    ));
+                     ],
+                    ),
+                ));
               },
             );
           },
@@ -236,7 +405,7 @@ class CadastroExercicio extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: Color.fromARGB(255, 255, 255, 255))),
                   TextFormField(
-                    style: TextStyle(
+                     style: TextStyle(
                         fontWeight: FontWeight.normal,
                         color: Color.fromARGB(255, 0, 0, 0)),
                     decoration: InputDecoration(
