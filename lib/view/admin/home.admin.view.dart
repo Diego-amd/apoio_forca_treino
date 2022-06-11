@@ -2,7 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomeAdmin extends StatelessWidget {
+String nomeEmpresa = '';
+
+class HomeAdmin extends StatefulWidget {
+  @override
+  _HomeAdmin createState() => _HomeAdmin();
+}
+
+class _HomeAdmin extends State<HomeAdmin> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  getDadosFirebase() async {
+    final QuerySnapshot<Map<String, dynamic>> resultado =
+        await Future.value(firestore.collection("admin").get());
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      //Navigator.of(context).pushNamed('/alterarSenha');
+      nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
+
+      if (this.mounted) {
+        setState(() {
+          nomeEmpresa = nomeEmpresa;
+        });
+      }
+    }
+  }
+
   void CadastrarAluno(BuildContext context) {
     Navigator.of(context).pushNamed('/alunosView');
   }
@@ -11,44 +38,41 @@ class HomeAdmin extends StatelessWidget {
     Navigator.of(context).pushNamed('/profView');
   }
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  var nomeEmpresa = "Vasco GYM";
-
   @override
   Widget build(BuildContext context) {
+    getDadosFirebase();
     return Scaffold(
       appBar: AppBar(
-          toolbarHeight: 80,
-          actions: [
-            Container(
-                margin: EdgeInsets.only(right: 25),
-                width: 50,
-                child: RawMaterialButton(
-                  shape: CircleBorder(),
-                  onPressed: () => renderModalSair(context),
-                  child: const CircleAvatar(
-                    backgroundImage:
-                        ExactAssetImage("images/circleAvatarMulher.png"),
-                  ),
-                ))
-          ],
-          title: Container(
-            margin: EdgeInsets.only(left: 25),
-            child: Row(
-              children: [
-                const Text("Bem-vindo, ", style: TextStyle(fontSize: 24)),
-                Text(
-                  nomeEmpresa,
-                  style: const TextStyle(fontSize: 24, color: Colors.yellow),
+        toolbarHeight: 80,
+        actions: [
+          Container(
+              margin: EdgeInsets.only(right: 25),
+              width: 50,
+              child: RawMaterialButton(
+                shape: CircleBorder(),
+                onPressed: () => renderModalSair(context),
+                child: const CircleAvatar(
+                  backgroundImage:
+                      ExactAssetImage("images/circleAvatarMulher.png"),
                 ),
-              ],
-            ),
+              ))
+        ],
+        title: Container(
+          margin: EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              const Text("Bem-vindo, ", style: TextStyle(fontSize: 24)),
+              Text(
+                nomeEmpresa,
+                style: const TextStyle(fontSize: 24, color: Colors.yellow),
+              ),
+            ],
           ),
-          backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-          elevation: 15,
-          shadowColor: Color.fromRGBO(6, 32, 41, 2)),
+        ),
+        backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+        elevation: 15,
+        shadowColor: Color.fromRGBO(6, 32, 41, 2),
+      ),
       body: Container(
         color: Colors.white,
         child: Center(
@@ -69,7 +93,7 @@ class HomeAdmin extends StatelessWidget {
                           opacity: 1),
                     ),
                     child: Container(
-                      padding: EdgeInsets.only(top: 65),
+                      padding: EdgeInsets.only(top: 55),
                       child: const Text("Alunos",
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -100,7 +124,7 @@ class HomeAdmin extends StatelessWidget {
                             opacity: 1),
                       ),
                       child: Container(
-                        padding: EdgeInsets.only(top: 65),
+                        padding: EdgeInsets.only(top: 55),
                         child: const Text("Professores",
                             textAlign: TextAlign.center,
                             style: TextStyle(
@@ -130,7 +154,7 @@ class HomeAdmin extends StatelessWidget {
       builder: (context) {
         return Container(
           color: const Color(0xFF737373),
-          height: MediaQuery.of(context).size.height * 0.2,
+          height: MediaQuery.of(context).size.height * 0.3,
           child: Container(
             padding: EdgeInsets.only(top: 10),
             decoration: const BoxDecoration(
@@ -157,15 +181,18 @@ class HomeAdmin extends StatelessWidget {
                       height: 70,
                       margin: const EdgeInsets.only(
                           left: 0, top: 30, right: 25, bottom: 25),
-                      decoration: const BoxDecoration(
-                        color: Colors.grey,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Color.fromRGBO(6, 32, 41, 2)),
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                       ),
                       child: TextButton(
-                        onPressed: () => {},
+                        onPressed: () => Navigator.pop(context),
                         child: const Text(
                           "Não",
-                          style: TextStyle(fontSize: 18, color: Colors.black),
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Color.fromRGBO(6, 32, 41, 2)),
                         ),
                       ),
                     ),

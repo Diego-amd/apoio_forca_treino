@@ -37,7 +37,8 @@ class AlteracaoSenha extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
 
   void changePassword(BuildContext context) async {
-    if (validaSenha()) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
       var newPassword = camposenha.text;
       final user = await FirebaseAuth.instance.currentUser;
       final cred =
@@ -128,6 +129,8 @@ class AlteracaoSenha extends StatelessWidget {
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return "Campo senha é obrigatório!";
+                                  } else if (value.length < 6) {
+                                    return "Senha tem que ter mais de 6 caracteres";
                                   }
                                   return null;
                                 },
@@ -160,8 +163,8 @@ class AlteracaoSenha extends StatelessWidget {
                               child: TextFormField(
                                 controller: campoconfirmaSenha,
                                 validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Campo senha é obrigatório!";
+                                  if (value != camposenha.text) {
+                                    return "Senha diferente do digitado acima";
                                   }
                                   return null;
                                 },

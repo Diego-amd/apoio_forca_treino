@@ -15,8 +15,12 @@ class AlunoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text("Listagem de alunos"),
-            backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
+          toolbarHeight: 80,
+          title: Text("Listagem de alunos"),
+          backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+          elevation: 15,
+          shadowColor: Color.fromRGBO(6, 32, 41, 2),
+        ),
         body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: firestore
                 .collection('alunos')
