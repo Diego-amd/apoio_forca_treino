@@ -37,11 +37,11 @@ class _HomeProfessor extends State<HomeProfessor> {
   }
 
   void CadastrarExercicio(BuildContext context) {
-    Navigator.of(context).pushNamed('/cadExercicio');
+    Navigator.of(context).pushNamed('/execView');
   }
 
   void CadastrarPlanoTreino(BuildContext context) {
-    Navigator.of(context).pushNamed('/planoTreino');
+    Navigator.of(context).pushNamed('/treinoView');
   }
 
   @override

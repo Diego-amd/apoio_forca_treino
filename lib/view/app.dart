@@ -1,3 +1,5 @@
+import 'package:apoio_forca_treino/view/professor/cad.treino.view.dart';
+import 'package:apoio_forca_treino/view/professor/exec.view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,9 @@ import 'alunos/home.aluno.view.dart';
 import 'admin/cad.alunos.view.dart';
 import 'admin/cad.professor.view.dart';
 import 'professor/cad.exercicio.view.dart';
+import 'professor/exec.view.dart';
+import 'professor/cad.treino.view.dart';
+import 'professor/treino.view.dart';
 
 import 'admin/alunos.view.dart';
 import 'admin/prof.view.dart';
@@ -35,6 +40,9 @@ class App extends StatelessWidget {
           '/homeProfessor': (context) => HomeProfessor(),
           '/alunosView': (context) => AlunoView(),
           '/profView': (context) => ProfessorView(),
+          '/execView': (context) => ExercicioView(),
+          '/cadTreino': (context) => CadastroTreino(),
+          '/treinoView': (context) => TreinoView()
         },
         initialRoute: '/');
   }
