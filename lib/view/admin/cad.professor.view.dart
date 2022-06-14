@@ -15,6 +15,7 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   bool valorManha = false;
   bool valorTarde = false;
   bool valorNoite = false;
+  bool loading = false;
 
   var manha;
   var tarde;
@@ -33,6 +34,9 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   TextEditingController senha = TextEditingController();
 
   void enviarCadastro(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     var nomeText = nome.text;
     var emailText = email.text;
     var senhaText = '123456';
@@ -258,22 +262,25 @@ class _CadastroProfessor extends State<CadastroProfessor> {
                               ],
                             )),
                       ),
-                      Container(
-                          width: 326,
-                          height: 50,
-                          margin: EdgeInsets.only(top: 70, bottom: 0),
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 245, 10),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextButton(
-                            child: const Text("Cadastrar",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                            onPressed: () => enviarCadastro(context),
-                          )),
+                      loading
+                          ? const CircularProgressIndicator(
+                              color: Color.fromARGB(255, 235, 213, 16))
+                          : Container(
+                              width: 326,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 70, bottom: 0),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 245, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: TextButton(
+                                child: const Text("Cadastrar",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black)),
+                                onPressed: () => enviarCadastro(context),
+                              )),
                     ],
                   ),
                 ),

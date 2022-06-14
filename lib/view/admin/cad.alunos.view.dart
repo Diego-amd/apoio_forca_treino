@@ -11,6 +11,7 @@ class _CadastroAlunoState extends State<CadastroAluno> {
   var formKey = GlobalKey<FormState>();
   final firestore = FirebaseFirestore.instance;
   final auth = FirebaseAuth.instance;
+  bool loading = false;
 
   int checkedSexo = -1;
 
@@ -19,6 +20,9 @@ class _CadastroAlunoState extends State<CadastroAluno> {
   TextEditingController senha = TextEditingController();
 
   void enviarCadastro(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     var nomeText = nome.text;
     var emailText = email.text;
     var senhaText = '123456';
@@ -232,22 +236,25 @@ class _CadastroAlunoState extends State<CadastroAluno> {
                               ),
                             )),
                       ),
-                      Container(
-                          width: 326,
-                          height: 50,
-                          margin: EdgeInsets.only(top: 70, bottom: 0),
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 245, 10),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextButton(
-                            child: const Text("Cadastrar",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                            onPressed: () => enviarCadastro(context),
-                          )),
+                      loading
+                          ? const CircularProgressIndicator(
+                              color: Color.fromARGB(255, 235, 213, 16))
+                          : Container(
+                              width: 326,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 70, bottom: 0),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 245, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: TextButton(
+                                child: const Text("Cadastrar",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black)),
+                                onPressed: () => enviarCadastro(context),
+                              )),
                     ],
                   ),
                 ),

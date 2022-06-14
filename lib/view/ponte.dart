@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -39,7 +37,7 @@ class Ponte extends StatelessWidget {
         Navigator.of(context).pushReplacementNamed('/homeAdmin');
         break;
       case 4:
-        Navigator.of(context).pushReplacementNamed('/alterarSenha');
+        Navigator.of(context).pushReplacementNamed('/');
         break;
     }
   }

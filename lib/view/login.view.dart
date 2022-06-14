@@ -45,17 +45,30 @@ class _LoginView extends State<LoginView> {
         colecao = "admin";
       }
     }
-    if (home == 1) {
-      Navigator.of(context).pushReplacementNamed('/homeAluno');
-    } else if (home == 2) {
-      Navigator.of(context).pushReplacementNamed('/homeProfessor');
-    } else if (home == 3) {
-      Navigator.of(context).pushReplacementNamed('/homeAdmin');
-    } else if (home == 4) {
-      Navigator.of(context).pushReplacementNamed('/alterarSenha',
-          arguments: {'colecao': colecao, 'documento': documento});
-    } else {
-      return print('Usuario não encontrado');
+    switch (home) {
+      case 1:
+        Navigator.of(context).pushReplacementNamed('/homeAluno');
+        break;
+      case 2:
+        Navigator.of(context).pushReplacementNamed('/homeProfessor');
+        break;
+      case 3:
+        Navigator.of(context).pushReplacementNamed('/homeAdmin');
+        break;
+      case 4:
+        Navigator.of(context).pushReplacementNamed('/alterarSenha',
+            arguments: {'colecao': colecao, 'documento': documento});
+        break;
+      default:
+        if (auth.currentUser != null) {
+          auth.signOut();
+        }
+        setState(() {
+          loading = false;
+        });
+        erroUsuario = true;
+        msgUsuario = 'Usuario não encontrado';
+        break;
     }
     await prefs.setInt('tipoUsuario', home);
   }
@@ -106,7 +119,6 @@ class _LoginView extends State<LoginView> {
 
     if (documents.length == 1) {
       documento = resultado.docs[0].id;
-      //Navigator.of(context).pushNamed('/alterarSenha');
       var senha = await resultado.docs[0].data()['senha'];
       if (senha == '123456') {
         print(senha);
@@ -152,7 +164,6 @@ class _LoginView extends State<LoginView> {
 
     if (documents.length == 1) {
       documento = resultado.docs[0].id;
-      //Navigator.of(context).pushNamed('/alterarSenha');
       var senha = await resultado.docs[0].data()['senha'];
       var nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
       if (senha == '123456') {

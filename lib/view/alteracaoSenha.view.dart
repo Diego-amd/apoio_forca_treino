@@ -88,24 +88,15 @@ class AlteracaoSenha extends StatelessWidget {
                 Container(
                   height: MediaQuery.of(context).size.height * 1,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("images/cadastro.png"),
-                        fit: BoxFit.fill),
-                  ),
+                      // image: DecorationImage(
+                      //     image: AssetImage("images/cadastro.png"),
+                      //     fit: BoxFit.fill),
+                      ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 1,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      stops: [0.6, 1],
-                      colors: [
-                        Color.fromRGBO(6, 32, 41, 2),
-                        Color.fromARGB(0, 32, 41, 2),
-                      ],
-                    ),
-                  ),
+                  decoration:
+                      const BoxDecoration(color: Color.fromRGBO(6, 32, 41, 2)),
                 ),
                 Center(
                   child: Container(
