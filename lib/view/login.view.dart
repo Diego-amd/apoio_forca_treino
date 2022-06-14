@@ -25,6 +25,7 @@ class _LoginView extends State<LoginView> {
   String msgUsuario = "";
   String msg = "";
   String msgSenha = "";
+  bool sucesso = true;
   // 0 = Login
   // C = Aluno
   // 2 = Professor
@@ -63,6 +64,7 @@ class _LoginView extends State<LoginView> {
     setState(() {
       loading = true;
     });
+
     if (formKey.currentState!.validate()) {
       try {
         formKey.currentState!.save();
@@ -70,7 +72,10 @@ class _LoginView extends State<LoginView> {
             email: email, password: senha);
       } on FirebaseAuthException catch (e) {
         erroUsuario = true;
-        loading = false;
+        sucesso = false;
+        setState(() {
+          loading = false;
+        });
         print('OIEE, DEU ERRO');
         print(e);
         switch (e.code) {
@@ -86,7 +91,7 @@ class _LoginView extends State<LoginView> {
         }
       }
       // Buscar dados
-      validaLogin(context);
+      sucesso ? validaLogin(context) : sucesso = false;
     }
   }
 
