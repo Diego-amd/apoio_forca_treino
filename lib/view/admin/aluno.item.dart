@@ -1,19 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../model/aluno.model.dart';
 
 class AlunoItem extends StatelessWidget {
   final AlunoModel model;
   final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
 
   AlunoItem(this.model);
 
   void ExcluirAluno(BuildContext context) async {
-    await firestore
-        .collection('alunos')
-        .doc(
-            'document_id') //precisa pegar o id do documento para fazer o delete
-        .update({'ativo': false});
+    final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
+        firestore
+            .collection("alunos")
+            .where("email", isEqualTo: model.email)
+            .get());
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      print("Documento será apagado:");
+      print(resultado.docs[0].id);
+      firestore.collection("alunos").doc(resultado.docs[0].id).delete();
+    }
+
+    //precisa pegar o id do documento para fazer o delete
   }
 
   @override
@@ -23,28 +34,40 @@ class AlunoItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            margin: EdgeInsets.fromLTRB(0, 5, 8, 0),
-            child: CircleAvatar(
-                backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-                // backgroundImage: NetworkImage(""),
-                child: Icon(Icons.person, color: Colors.white)),
-          ),
+          // Container(
+          //   width: 40,
+          //   height: 40,
+          //   margin: EdgeInsets.fromLTRB(0, 5, 8, 0),
+          //   child: CircleAvatar(
+          //       backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+          //       // backgroundImage: NetworkImage(""),
+          //       child: Icon(Icons.person, color: Colors.white)),
+          // ),
           Expanded(
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.nomeCompleto!.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.nomeCompleto!.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                   ),
-                ]),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            onPressed: () => {},
+            icon: const Icon(Icons.edit),
+            color: Colors.blue,
+            tooltip: "Teste",
+          ),
+          IconButton(
+            onPressed: () => showDialogAlert(context),
+            icon: const Icon(Icons.delete),
+            color: Colors.red,
           ),
         ],
       ),

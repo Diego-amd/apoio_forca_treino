@@ -21,10 +21,13 @@ class _LoginView extends State<LoginView> {
   bool loading = false;
   bool erro = false;
   bool erroSenha = false;
+  bool erroUsuario = false;
+  String msgUsuario = "";
   String msg = "";
   String msgSenha = "";
+  bool sucesso = true;
   // 0 = Login
-  // 1 = Aluno
+  // C = Aluno
   // 2 = Professor
   // 3 = Admin
   // 4 = Primeiro acesso/Alterar senha
@@ -61,13 +64,34 @@ class _LoginView extends State<LoginView> {
     setState(() {
       loading = true;
     });
+
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      var result =
-          await auth.signInWithEmailAndPassword(email: email, password: senha);
+      try {
+        formKey.currentState!.save();
+        var result = await auth.signInWithEmailAndPassword(
+            email: email, password: senha);
+      } on FirebaseAuthException catch (e) {
+        erroUsuario = true;
+        sucesso = false;
+        setState(() {
+          loading = false;
+        });
+        print('OIEE, DEU ERRO');
+        print(e);
+        switch (e.code) {
+          case 'invalid-email':
+            msgUsuario = 'Email invalido';
+            break;
+          case 'wrong-password':
+            msgUsuario = 'Senha incorreta';
+            break;
+          case 'user-not-found':
+            msgUsuario = 'Usuario não encontrado';
+            break;
+        }
+      }
       // Buscar dados
-      print(home);
-      validaLogin(context);
+      sucesso ? validaLogin(context) : sucesso = false;
     }
   }
 
@@ -322,6 +346,16 @@ class _LoginView extends State<LoginView> {
                                         color: Colors.black)),
                                 onPressed: () => save(context),
                               )),
+                      erroUsuario
+                          ? Container(
+                              margin: EdgeInsets.only(top: 3, bottom: 0),
+                              child: Text(msgUsuario,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.red,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                     ],
                   ),
                 ),

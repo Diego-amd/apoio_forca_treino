@@ -20,8 +20,16 @@ import 'professor/treino.view.dart';
 import 'admin/alunos.view.dart';
 import 'admin/prof.view.dart';
 
-class App extends StatelessWidget {
+import 'ponte.dart';
+
+class App extends StatefulWidget {
+  @override
+  _App createState() => _App();
+}
+
+class _App extends State<App> {
   final auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,10 +48,11 @@ class App extends StatelessWidget {
           '/homeProfessor': (context) => HomeProfessor(),
           '/alunosView': (context) => AlunoView(),
           '/profView': (context) => ProfessorView(),
+          '/ponte': (context) => Ponte(),
           '/execView': (context) => ExercicioView(),
           '/cadTreino': (context) => CadastroTreino(),
           '/treinoView': (context) => TreinoView()
         },
-        initialRoute: '/');
+        initialRoute: '/ponte');
   }
 }
