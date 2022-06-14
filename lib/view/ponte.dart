@@ -47,12 +47,10 @@ class Ponte extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getPrefs(context);
-    
-    return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(
-          color: Colors.yellow,
-        ),
+
+    return Center(
+      child: CircularProgressIndicator(
+        color: Colors.yellow,
       ),
     );
   }

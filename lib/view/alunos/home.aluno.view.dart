@@ -1,48 +1,58 @@
+import 'package:apoio_forca_treino/view/alunos/aluno.home.view.dart';
+import 'package:apoio_forca_treino/view/alunos/conta.aluno.view.dart';
+import 'package:apoio_forca_treino/view/alunos/treinos.alunos.view.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-FirebaseAuth auth = FirebaseAuth.instance;
+//É o BottomNavigationBar contendo as opções de telas
+class HomeAluno extends StatefulWidget {
+  @override
+  _HomeAluno createState() => _HomeAluno();
+}
 
-class HomeAluno extends StatelessWidget {
+class _HomeAluno extends State<HomeAluno> {
+  int _indiceAtual = 0;
+  final cor = Color.fromRGBO(6, 32, 41, 2);
+  final List<Widget> _telas = [
+    AlunoHome(),
+    TreinosAluno(),
+    ContaAluno(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        Text('Home aluno'),
-        Container(
-            width: 326,
-            height: 50,
-            margin: EdgeInsets.only(top: 20),
-            decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 245, 10),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextButton(
-              child: const Text("Sair",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black)),
-              onPressed: () => Navigator.of(context).pushReplacementNamed('/'),
-            )),
-        Container(
-            width: 326,
-            height: 50,
-            margin: EdgeInsets.only(top: 20),
-            decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 255, 245, 10),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: TextButton(
-                child: const Text("Logoff",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black)),
-                onPressed: () {
-                  auth.signOut();
-                  Navigator.of(context).pushReplacementNamed('/');
-                }))
-      ],
-    ));
+      body: _telas[_indiceAtual],
+      bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: cor,
+          unselectedIconTheme: IconThemeData(color: Colors.white),
+          selectedIconTheme: IconThemeData(color: Colors.yellow),
+          unselectedItemColor: Colors.white,
+          selectedItemColor: Colors.yellow,
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.w700),
+          currentIndex: _indiceAtual,
+          onTap: mudaIndex,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Inicio",
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage("images/academia.png"),
+              ),
+              label: "Treinos",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: "Minha conta",
+            )
+          ]),
+    );
+  }
+
+  void mudaIndex(int index) {
+    setState(() {
+      _indiceAtual = index;
+    });
   }
 }

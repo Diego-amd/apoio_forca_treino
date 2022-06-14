@@ -24,7 +24,7 @@ class AlunoView extends StatelessWidget {
         body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: firestore
                 .collection('alunos')
-                .orderBy('nomeCompleto')
+                .where('ativo', isEqualTo: true)
                 .snapshots(),
             builder: (_, snapshot) {
               if (!snapshot.hasData) return CircularProgressIndicator();

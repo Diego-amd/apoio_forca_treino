@@ -19,7 +19,6 @@ class _HomeAdmin extends State<HomeAdmin> {
     final List<DocumentSnapshot> documents = resultado.docs;
 
     if (documents.length == 1) {
-      //Navigator.of(context).pushNamed('/alterarSenha');
       nomeEmpresa = await resultado.docs[0].data()['nomeEmpresa'];
 
       if (this.mounted) {

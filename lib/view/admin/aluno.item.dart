@@ -23,28 +23,29 @@ class AlunoItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            margin: EdgeInsets.fromLTRB(0, 5, 8, 0),
-            child: CircleAvatar(
-                backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-                // backgroundImage: NetworkImage(""),
-                child: Icon(Icons.person, color: Colors.white)),
-          ),
+          // Container(
+          //   width: 40,
+          //   height: 40,
+          //   margin: EdgeInsets.fromLTRB(0, 5, 8, 0),
+          //   child: CircleAvatar(
+          //       backgroundColor: Color.fromRGBO(6, 32, 41, 2),
+          //       // backgroundImage: NetworkImage(""),
+          //       child: Icon(Icons.person, color: Colors.white)),
+          // ),
           Expanded(
             child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.nomeCompleto!.toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.nomeCompleto!.toUpperCase(),
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
                   ),
-                ]),
+                ),
+              ],
+            ),
           ),
           IconButton(
             onPressed: () => {},
@@ -56,7 +57,7 @@ class AlunoItem extends StatelessWidget {
             onPressed: () => showDialogAlert(context),
             icon: const Icon(Icons.delete),
             color: Colors.red,
-          )
+          ),
         ],
       ),
     );
