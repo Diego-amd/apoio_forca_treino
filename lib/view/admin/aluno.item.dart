@@ -46,17 +46,6 @@ class AlunoItem extends StatelessWidget {
                   ),
                 ]),
           ),
-          IconButton(
-            onPressed: () => {},
-            icon: const Icon(Icons.edit),
-            color: Colors.blue,
-            tooltip: "Teste",
-          ),
-          IconButton(
-            onPressed: () => showDialogAlert(context),
-            icon: const Icon(Icons.delete),
-            color: Colors.red,
-          )
         ],
       ),
     );
