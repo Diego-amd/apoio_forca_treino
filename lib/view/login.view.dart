@@ -21,6 +21,8 @@ class _LoginView extends State<LoginView> {
   bool loading = false;
   bool erro = false;
   bool erroSenha = false;
+  bool erroUsuario = false;
+  String msgUsuario = "";
   String msg = "";
   String msgSenha = "";
   // 0 = Login
@@ -62,11 +64,28 @@ class _LoginView extends State<LoginView> {
       loading = true;
     });
     if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      var result =
-          await auth.signInWithEmailAndPassword(email: email, password: senha);
+      try {
+        formKey.currentState!.save();
+        var result = await auth.signInWithEmailAndPassword(
+            email: email, password: senha);
+      } on FirebaseAuthException catch (e) {
+        erroUsuario = true;
+        loading = false;
+        print('OIEE, DEU ERRO');
+        print(e);
+        switch (e.code) {
+          case 'invalid-email':
+            msgUsuario = 'Email invalido';
+            break;
+          case 'wrong-password':
+            msgUsuario = 'Senha incorreta';
+            break;
+          case 'user-not-found':
+            msgUsuario = 'Usuario não encontrado';
+            break;
+        }
+      }
       // Buscar dados
-      print(home);
       validaLogin(context);
     }
   }
@@ -322,6 +341,16 @@ class _LoginView extends State<LoginView> {
                                         color: Colors.black)),
                                 onPressed: () => save(context),
                               )),
+                      erroUsuario
+                          ? Container(
+                              margin: EdgeInsets.only(top: 3, bottom: 0),
+                              child: Text(msgUsuario,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.red,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                     ],
                   ),
                 ),

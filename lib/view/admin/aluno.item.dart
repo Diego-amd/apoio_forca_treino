@@ -1,19 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../model/aluno.model.dart';
 
 class AlunoItem extends StatelessWidget {
   final AlunoModel model;
   final firestore = FirebaseFirestore.instance;
+  final auth = FirebaseAuth.instance;
 
   AlunoItem(this.model);
 
   void ExcluirAluno(BuildContext context) async {
-    await firestore
-        .collection('alunos')
-        .doc(
-            'document_id') //precisa pegar o id do documento para fazer o delete
-        .update({'ativo': false});
+    final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
+        firestore
+            .collection("alunos")
+            .where("email", isEqualTo: model.email)
+            .get());
+    final List<DocumentSnapshot> documents = resultado.docs;
+
+    if (documents.length == 1) {
+      print("Documento será apagado:");
+      print(resultado.docs[0].id);
+      firestore.collection("alunos").doc(resultado.docs[0].id).delete();
+    }
+
+    //precisa pegar o id do documento para fazer o delete
   }
 
   @override
