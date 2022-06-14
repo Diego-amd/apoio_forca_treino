@@ -71,23 +71,20 @@ class _CadastroTreino extends State<CadastroTreino> {
                 itemBuilder: (BuildContext context, int i) {
                   var doc = snapshot.data!.docs[i];
                   var value = doc.data;
-                  print('alunos/${doc.reference.id}');
+                  print('treinos/${doc.reference.id}');
                   return Container(
                     margin: EdgeInsets.fromLTRB(13, 7, 21, 7),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: 40,
+                          width: 0,
                           height: 40,
-                          margin: EdgeInsets.fromLTRB(13, 7, 21, 7),
-                          child: CircleAvatar(
-                              backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-                              // backgroundImage: NetworkImage(""),
-                              child: Icon(Icons.person, color: Colors.white)),
+                          margin: EdgeInsets.fromLTRB(0, 7, 21, 7),
+                          
                         ),
                         Expanded(
-                            child: ListTile(
+                          child: ListTile(
                           title: Text(doc['nomeExercicio']),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

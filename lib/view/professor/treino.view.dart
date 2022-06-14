@@ -12,8 +12,7 @@ class TreinoView extends StatefulWidget {
 class _TreinoView extends State<TreinoView> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final alunos = [CheckBoxState(title: ''),
-                CheckBoxState (title: '')];
+  final alunos = [CheckBoxState(title: ''), CheckBoxState(title: '')];
 
   void CadastrarTreino(BuildContext context) {
     Navigator.of(context).pushNamed('/cadTreino');
