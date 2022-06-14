@@ -32,13 +32,6 @@ class _App extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    // getPrefs();
-    // setState(() {
-    //   if (home == 1) {
-    //     homeEnvio = '/homeAluno';
-    //   }
-    // });
-    // print(homeEnvio);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
