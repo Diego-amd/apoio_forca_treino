@@ -24,7 +24,7 @@ class _LoginView extends State<LoginView> {
   String msg = "";
   String msgSenha = "";
   // 0 = Login
-  // 1 = Aluno
+  // C = Aluno
   // 2 = Professor
   // 3 = Admin
   // 4 = Primeiro acesso/Alterar senha
