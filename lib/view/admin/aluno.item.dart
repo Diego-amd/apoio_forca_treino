@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../model/aluno.model.dart';
 
 class AlunoItem extends StatelessWidget {
   final AlunoModel model;
   final firestore = FirebaseFirestore.instance;
-  final auth = FirebaseAuth.instance;
 
   AlunoItem(this.model);
 
