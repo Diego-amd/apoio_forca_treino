@@ -32,7 +32,6 @@ class _CadastroAlunoState extends State<CadastroAluno> {
     });
     var nomeText = nome.text;
     var emailText = email.text;
-    var datanascText = datanasc.text;
     var senhaText = '123456';
     var alturaText = altura.text;
     var pesoText = peso.text;
@@ -62,7 +61,6 @@ class _CadastroAlunoState extends State<CadastroAluno> {
 
         await firestore.collection('alunos').add({
           "nomeCompleto": nomeText,
-          "datanasc": datanascText,
           "email": emailText,
           "senha": senhaText,
           "ativo": true,
@@ -175,34 +173,6 @@ class _CadastroAlunoState extends State<CadastroAluno> {
                               border: InputBorder.none,
                               hintText: "E-mail",
                               icon: Icon(Icons.email,
-                                  size: 20, color: Colors.black38),
-                              labelStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                            ),
-                            style: TextStyle(fontSize: 14),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        child: Container(
-                          width: 326,
-                          height: 50,
-                          margin: EdgeInsets.only(top: 20),
-                          padding: EdgeInsets.only(left: 16),
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextFormField(
-                            controller: datanasc,
-                            onSaved: (value) => {},
-                            keyboardType: TextInputType.datetime,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "Data nascimento",
-                              icon: Icon(Icons.calendar_month,
                                   size: 20, color: Colors.black38),
                               labelStyle: TextStyle(
                                   color: Colors.black,

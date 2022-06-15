@@ -142,6 +142,9 @@ class _LoginView extends State<LoginView> {
     if (documents.length == 1) {
       documento = resultado.docs[0].id;
       var senha = await resultado.docs[0].data()['senha'];
+      final prefs = await SharedPreferences.getInstance();
+      var nomeAluno = await resultado.docs[0].data()['nomeCompleto'];
+      prefs.setString("nomeAluno", nomeAluno);
       if (senha == '123456') {
         return home = 4;
       } else {

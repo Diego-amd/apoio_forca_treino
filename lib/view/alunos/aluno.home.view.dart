@@ -93,51 +93,6 @@ class _AlunoHome extends State<AlunoHome> {
         width: MediaQuery.of(context).size.width,
         child: Stack(
           children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height / 30),
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 6,
-                          blurRadius: 5,
-                          offset: Offset(3, 7),
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text("Hoje o seu treino é",
-                              style: TextStyle(
-                                fontSize: 16,
-                              )),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 30),
-                          child: Text(
-                            "Peito",
-                            style: TextStyle(
-                                fontSize: 28, fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
             Container(
               margin: EdgeInsets.only(top: 170, left: 23),
               child: const Text(
@@ -169,7 +124,7 @@ class _AlunoHome extends State<AlunoHome> {
       context: context,
       builder: (context) {
         return Container(
-          color: const Color(0xFF737373),
+          color: const Color.fromRGBO(6, 32, 41, 2),
           height: MediaQuery.of(context).size.height * 0.3,
           child: Container(
             padding: EdgeInsets.only(top: 10),

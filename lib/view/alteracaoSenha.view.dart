@@ -80,129 +80,125 @@ class _AlteracaoSenha extends State<AlteracaoSenha> {
   Widget build(BuildContext context) {
     recebePrefs(context);
     return Scaffold(
-        appBar: AppBar(
-            title: Text("Primeiro Acesso"),
-            backgroundColor: Color.fromRGBO(6, 32, 41, 2)),
         body: Form(
-          key: formKey,
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 1,
-                  decoration: const BoxDecoration(
-                      // image: DecorationImage(
-                      //     image: AssetImage("images/cadastro.png"),
-                      //     fit: BoxFit.fill),
-                      ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 1,
-                  decoration:
-                      const BoxDecoration(color: Color.fromRGBO(6, 32, 41, 2)),
-                ),
-                Center(
-                  child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 35),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            child: Container(
-                              width: 326,
-                              height: 50,
-                              margin: EdgeInsets.only(top: 20),
-                              padding: EdgeInsets.only(left: 16),
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: TextFormField(
-                                controller: camposenha,
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return "Campo senha é obrigatório!";
-                                  } else if (value.length < 6) {
-                                    return "Senha tem que ter mais de 6 caracteres";
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Senha",
-                                  icon: Icon(Icons.lock,
-                                      size: 20, color: Colors.black38),
-                                  labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16),
-                                ),
-                                style: TextStyle(fontSize: 14),
+      key: formKey,
+      child: Container(
+        color: Color.fromRGBO(6, 32, 41, 2),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 35),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text(
+                            "Por favor, insira uma nova senha",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+                        SizedBox(
+                          child: Container(
+                            width: 326,
+                            height: 50,
+                            margin: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(left: 16),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: TextFormField(
+                              controller: camposenha,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Campo senha é obrigatório!";
+                                } else if (value.length < 6) {
+                                  return "Senha tem que ter mais de 6 caracteres";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Senha",
+                                icon: Icon(Icons.lock,
+                                    size: 20, color: Colors.black38),
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16),
                               ),
+                              style: TextStyle(fontSize: 14),
                             ),
                           ),
-                          SizedBox(
-                            child: Container(
-                              width: 326,
-                              height: 50,
-                              margin: EdgeInsets.only(top: 20),
-                              padding: EdgeInsets.only(left: 16),
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10))),
-                              child: TextFormField(
-                                controller: campoconfirmaSenha,
-                                validator: (value) {
-                                  if (value != camposenha.text) {
-                                    return "Senha diferente do digitado acima";
-                                  }
-                                  return null;
-                                },
-                                keyboardType: TextInputType.text,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "Confirmar Senha",
-                                  icon: Icon(Icons.lock,
-                                      size: 20, color: Colors.black38),
-                                  labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16),
-                                ),
-                                style: TextStyle(fontSize: 14),
+                        ),
+                        SizedBox(
+                          child: Container(
+                            width: 326,
+                            height: 50,
+                            margin: EdgeInsets.only(top: 20),
+                            padding: EdgeInsets.only(left: 16),
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: TextFormField(
+                              controller: campoconfirmaSenha,
+                              validator: (value) {
+                                if (value != camposenha.text) {
+                                  return "Senha diferente do digitado acima";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.text,
+                              obscureText: true,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "Confirmar Senha",
+                                icon: Icon(Icons.lock,
+                                    size: 20, color: Colors.black38),
+                                labelStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16),
                               ),
+                              style: TextStyle(fontSize: 14),
                             ),
                           ),
-                        ],
+                        ),
+                      ],
+                    )),
+              ),
+              loading
+                  ? const CircularProgressIndicator(
+                      color: Color.fromARGB(255, 235, 213, 16))
+                  : Container(
+                      width: 326,
+                      height: 50,
+                      margin: EdgeInsets.only(top: 50, bottom: 0, left: 0),
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(255, 255, 245, 10),
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: TextButton(
+                        child: const Text("Acessar",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black)),
+                        onPressed: () => changePassword(context),
                       )),
-                ),
-                loading
-                    ? const CircularProgressIndicator(
-                        color: Color.fromARGB(255, 235, 213, 16))
-                    : Container(
-                        width: 326,
-                        height: 50,
-                        margin: EdgeInsets.only(top: 160, bottom: 0, left: 35),
-                        decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 255, 245, 10),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: TextButton(
-                          child: const Text("Acessar",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.black)),
-                          onPressed: () => changePassword(context),
-                        )),
-              ],
-            ),
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }
