@@ -7,6 +7,7 @@ import '../../model/aluno.model.dart';
 
 String nomeAluno = '';
 String nomeInicial = '';
+String docID = 'qFRhPDNvgC9vdtTXd42b';
 
 class ContaAluno extends StatefulWidget {
   @override
@@ -16,7 +17,6 @@ class ContaAluno extends StatefulWidget {
 class _ContaAluno extends State<ContaAluno> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final cor = Color.fromRGBO(6, 32, 41, 2);
 
   getDadosFirebase() async {
     var userAtual = auth.currentUser?.uid ?? 0;
@@ -27,8 +27,6 @@ class _ContaAluno extends State<ContaAluno> {
               .where('uid', isEqualTo: auth.currentUser!.uid)
               .get());
       final List<DocumentSnapshot> documents = resultado.docs;
-
-
 
       if (documents.length == 1) {
         nomeAluno = await resultado.docs[0].data()['nomeCompleto'];
@@ -43,7 +41,7 @@ class _ContaAluno extends State<ContaAluno> {
   }
 
   void AlterarSenha(BuildContext context) {
-    Navigator.of(context).pushNamed('/alterarSenha');
+    Navigator.of(context).pushNamed('/alterarSenhaAln');
   }
 
   @override
@@ -114,6 +112,22 @@ class _ContaAluno extends State<ContaAluno> {
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black)),
                           onPressed: () => AlterarSenha(context),
+                        )),
+                    Container(
+                        width: 106,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 20, bottom: 0),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 200, 7, 7),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextButton(
+                          child: const Text("Logoff",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black)),
+                          onPressed: () => renderModalSair(context),
                         )),
                   ]),
             ),
@@ -186,7 +200,7 @@ class _ContaAluno extends State<ContaAluno> {
                   {
                     final nomeAluno = FirebaseFirestore.instance
                         .collection('alunos')
-                        .doc()
+                        .doc(docID)
                         .update({
                       'nomeCompleto': nome.text,
                     });
@@ -196,6 +210,84 @@ class _ContaAluno extends State<ContaAluno> {
               ),
             ),
           ],
+        );
+      },
+    );
+  }
+
+  void renderModalSair(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          color: const Color(0xFF737373),
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: Container(
+            padding: EdgeInsets.only(top: 10),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Text(
+                  "Deseja sair do aplicativo?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 70,
+                      margin: const EdgeInsets.only(
+                          left: 0, top: 30, right: 25, bottom: 25),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Color.fromRGBO(6, 32, 41, 2)),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          "Não",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Color.fromRGBO(6, 32, 41, 2)),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 150,
+                      height: 70,
+                      margin: const EdgeInsets.only(
+                          left: 25, top: 30, right: 25, bottom: 25),
+                      decoration: const BoxDecoration(
+                        color: Color.fromRGBO(6, 32, 41, 2),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                      ),
+                      child: TextButton(
+                        onPressed: () => {
+                          auth.signOut(),
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/', (Route<dynamic> route) => false),
+                        },
+                        child: const Text("Sim",
+                            style:
+                                TextStyle(fontSize: 18, color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
         );
       },
     );

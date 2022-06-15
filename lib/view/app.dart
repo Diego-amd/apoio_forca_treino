@@ -14,12 +14,14 @@ import 'admin/cad.alunos.view.dart';
 import 'admin/cad.professor.view.dart';
 import 'professor/cad.exercicio.view.dart';
 import 'professor/exec.view.dart';
+import 'alunos/alteracaoSenha.view.dart';
 import 'professor/cad.treino.view.dart';
 import 'professor/treino.view.dart';
 import 'professor/treinos/aluno.view.dart';
 import 'professor/treinos/exercicios.view.dart';
 import 'professor/treinos/plano.view.dart';
 import 'professor/treinos/plano.resumo.view.dart';
+import 'alunos/conta.aluno.view.dart';
 
 import 'admin/alunos.view.dart';
 import 'admin/prof.view.dart';
@@ -44,6 +46,7 @@ class _App extends State<App> {
         routes: {
           '/': (context) => LoginView(),
           '/alterarSenha': (context) => AlteracaoSenha(),
+          '/alterarSenhaAln': (context) => AlteracaoSenhaAluno(),
           '/homeAdmin': (context) => HomeAdmin(),
           '/homeAluno': (context) => HomeAluno(),
           '/cadAluno': (context) => CadastroAluno(),
@@ -58,6 +61,7 @@ class _App extends State<App> {
           '/exercicioTreino': (context) => ExercicioTreino(),
           '/planoTreino': (context) => PlanoTreino(),
           '/planoTreinoResumo': (context) => PlanoTreinoResumo(),
+          '/contaAln':(context) => ContaAluno(),
         },
         initialRoute: '/ponte');
   }

@@ -7,6 +7,7 @@ class TreinosAluno extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(6, 32, 41, 2),
       body: Container(
         color: Colors.white,
         child: Text("Entrou nos treinos dos alunos"),
