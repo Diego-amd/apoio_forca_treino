@@ -19,8 +19,6 @@ class AlunoItem extends StatelessWidget {
     final List<DocumentSnapshot> documents = resultado.docs;
 
     if (documents.length == 1) {
-      print("Documento será apagado:");
-      print(resultado.docs[0].id);
       firestore.collection("alunos").doc(resultado.docs[0].id).delete();
     }
 

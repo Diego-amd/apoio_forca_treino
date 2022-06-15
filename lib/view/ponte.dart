@@ -8,7 +8,6 @@ class Ponte extends StatelessWidget {
 
   Future<void> getPrefs(context) async {
     final prefs = await SharedPreferences.getInstance();
-    print(prefs.getInt("tipoUsuario"));
     home = prefs.getInt('tipoUsuario') ?? 0;
     redirecionaHome(context);
     if (auth.currentUser!.uid.isEmpty) {
