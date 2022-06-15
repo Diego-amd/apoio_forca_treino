@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String nomeEmpresa = '';
 
@@ -27,6 +28,12 @@ class _HomeAdmin extends State<HomeAdmin> {
         });
       }
     }
+  }
+
+  Future<void> logOff(context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('tipoUsuario', 0);
+    auth.signOut();
   }
 
   void CadastrarAluno(BuildContext context) {
@@ -206,7 +213,7 @@ class _HomeAdmin extends State<HomeAdmin> {
                       ),
                       child: TextButton(
                         onPressed: () => {
-                          auth.signOut(),
+                          logOff(context),
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/', (Route<dynamic> route) => false),
                         },

@@ -35,6 +35,8 @@ class _CadastroExercicio extends State<CadastroExercicio> {
         "nome": nomeExec,
         "descricao": descricaoExec,
         "tipo": tipoExec,
+        "ativo": true,
+        "checked": false,
       });
 
       await firestore.collection('treinos').add({
@@ -113,7 +115,7 @@ class _CadastroExercicio extends State<CadastroExercicio> {
                               }
                               return null;
                             },
-                            keyboardType: TextInputType.name,
+                            keyboardType: TextInputType.text,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               hintText: "Nome exercicio",
@@ -159,15 +161,15 @@ class _CadastroExercicio extends State<CadastroExercicio> {
                       ),
                       SizedBox(
                         child: Container(
-                            width: 326,
-                            height: 48,
-                            margin: EdgeInsets.only(top: 20),
-                            padding: EdgeInsets.only(left: 16),
-                            decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: TextFormField(
+                          width: 326,
+                          height: 48,
+                          margin: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
                             controller: tipo,
                             onSaved: (value) => {},
                             validator: (value) {

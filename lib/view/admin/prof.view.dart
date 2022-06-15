@@ -10,6 +10,7 @@ class ProfessorView extends StatelessWidget {
   void CadastrarProfessor(BuildContext context) {
     Navigator.of(context).pushNamed('/cadProfessor');
   }
+  
 
   @override
   Widget build(BuildContext context) {

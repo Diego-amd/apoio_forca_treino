@@ -11,46 +11,42 @@ class ExercicioItem extends StatelessWidget {
   void ExcluirExercicio(BuildContext context) async {
     await firestore
         .collection('treinos')
-        .doc(
-            'document_id')
+        .doc('document_id')
         .update({'excluido': true});
   }
 
   @override
-  
   Widget build(BuildContext context) {
-    
     return Container(
-      margin: EdgeInsets.fromLTRB(13, 7, 21, 7),
-      child:  ListTile(
-                title: Text(model.nomeExec!.toUpperCase(),),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(model.descricaoExec!.toUpperCase(),),
-                    Text(model.tipoExec!.toUpperCase(), style: TextStyle(
-                      fontWeight: FontWeight. bold
-                      ),
-                    ),
-                            
-                          
-                      ],
-                    ),
-                    trailing: Wrap( children: <Widget> [
-                      IconButton(
-                        icon: Icon(Icons.edit),
-                        color: Color.fromARGB(255, 16, 18, 135),
-                        onPressed: (null),                        
-                        ),                      
-                      IconButton(
-                          onPressed: () => showDialogAlert(context),
-                          icon: const Icon(Icons.delete),
-                          color: Color.fromARGB(255, 219, 40, 27),
-              )     
-          ],
-        ),
-      )
-    );
+        margin: EdgeInsets.fromLTRB(13, 7, 21, 7),
+        child: ListTile(
+          title: Text(
+            model.nomeExec!.toUpperCase(),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                model.tipoExec!.toUpperCase(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          trailing: Wrap(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.edit),
+                color: Color.fromARGB(255, 16, 18, 135),
+                onPressed: (null),
+              ),
+              IconButton(
+                onPressed: () => showDialogAlert(context),
+                icon: const Icon(Icons.delete),
+                color: Color.fromARGB(255, 219, 40, 27),
+              )
+            ],
+          ),
+        ));
   }
 
   void showDialogAlert(BuildContext context) {

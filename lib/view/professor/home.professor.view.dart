@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String nomeProfessor = '';
+String nomeInicial = '';
 
 class HomeProfessor extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _HomeProfessor extends State<HomeProfessor> {
       if (documents.length == 1) {
         //Navigator.of(context).pushNamed('/alterarSenha');
         nomeProfessor = await resultado.docs[0].data()['nomeCompleto'];
+        nomeInicial = nomeProfessor[0].toUpperCase();
 
         if (this.mounted) {
           setState(() {
@@ -41,7 +44,13 @@ class _HomeProfessor extends State<HomeProfessor> {
   }
 
   void CadastrarPlanoTreino(BuildContext context) {
-    Navigator.of(context).pushNamed('/treinoView');
+    Navigator.of(context).pushNamed('/alunoTreino');
+  }
+
+  Future<void> logOff(context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('tipoUsuario', 0);
+    auth.signOut();
   }
 
   @override
@@ -54,12 +63,18 @@ class _HomeProfessor extends State<HomeProfessor> {
           Container(
               margin: EdgeInsets.only(right: 25),
               width: 50,
-              child: RawMaterialButton(
-                shape: CircleBorder(),
+              child: FloatingActionButton(
+                tooltip: "Sair",
+                backgroundColor: Colors.yellow,
+                focusElevation: 2,
                 onPressed: () => renderModalSair(context),
-                child: const CircleAvatar(
-                  backgroundImage:
-                      ExactAssetImage("images/circleAvatarMulher.png"),
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  radius: 22,
+                  child: Text(nomeInicial,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 20)),
                 ),
               ))
         ],
@@ -67,10 +82,10 @@ class _HomeProfessor extends State<HomeProfessor> {
           margin: EdgeInsets.only(left: 10),
           child: Row(
             children: [
-              const Text("Bem-vindo, ", style: TextStyle(fontSize: 24)),
+              const Text("Bem-vindo, ", style: TextStyle(fontSize: 20)),
               Text(
                 nomeProfessor,
-                style: const TextStyle(fontSize: 24, color: Colors.yellow),
+                style: const TextStyle(fontSize: 20, color: Colors.yellow),
               ),
             ],
           ),
@@ -213,7 +228,7 @@ class _HomeProfessor extends State<HomeProfessor> {
                       ),
                       child: TextButton(
                         onPressed: () => {
-                          auth.signOut(),
+                          logOff(context),
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/', (Route<dynamic> route) => false),
                         },

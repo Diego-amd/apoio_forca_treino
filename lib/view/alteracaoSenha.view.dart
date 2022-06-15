@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+class AlteracaoSenha extends StatefulWidget {
+  @override
+  _AlteracaoSenha createState() => _AlteracaoSenha();
+}
 
 var txtsenha1 = 'senha';
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,10 +37,14 @@ bool validaSenha() {
   }
 }
 
-class AlteracaoSenha extends StatelessWidget {
+class _AlteracaoSenha extends State<AlteracaoSenha> {
   var formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   void changePassword(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var newPassword = camposenha.text;
@@ -58,7 +66,7 @@ class AlteracaoSenha extends StatelessWidget {
               Navigator.of(context).pushReplacementNamed('/homeAluno');
               break;
             case 'professores':
-              Navigator.of(context).pushReplacementNamed('/homeProfessores');
+              Navigator.of(context).pushReplacementNamed('/homeProfessor');
               break;
             case 'admin':
               Navigator.of(context).pushReplacementNamed('/homeAdmin');
@@ -69,6 +77,9 @@ class AlteracaoSenha extends StatelessWidget {
         });
       }).catchError((err) {});
     } else {
+      setState(() {
+        loading = false;
+      });
       print('Não passei');
     }
   }
@@ -88,24 +99,15 @@ class AlteracaoSenha extends StatelessWidget {
                 Container(
                   height: MediaQuery.of(context).size.height * 1,
                   decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("images/cadastro.png"),
-                        fit: BoxFit.fill),
-                  ),
+                      // image: DecorationImage(
+                      //     image: AssetImage("images/cadastro.png"),
+                      //     fit: BoxFit.fill),
+                      ),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 1,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      stops: [0.6, 1],
-                      colors: [
-                        Color.fromRGBO(6, 32, 41, 2),
-                        Color.fromARGB(0, 32, 41, 2),
-                      ],
-                    ),
-                  ),
+                  decoration:
+                      const BoxDecoration(color: Color.fromRGBO(6, 32, 41, 2)),
                 ),
                 Center(
                   child: Container(
@@ -187,21 +189,25 @@ class AlteracaoSenha extends StatelessWidget {
                         ],
                       )),
                 ),
-                Container(
-                    width: 326,
-                    height: 50,
-                    margin: EdgeInsets.only(top: 160, bottom: 0, left: 35),
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 255, 245, 10),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: TextButton(
-                      child: const Text("Acessar",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black)),
-                      onPressed: () => changePassword(context),
-                    )),
+                loading
+                    ? const CircularProgressIndicator(
+                        color: Color.fromARGB(255, 235, 213, 16))
+                    : Container(
+                        width: 326,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 160, bottom: 0, left: 35),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 245, 10),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextButton(
+                          child: const Text("Acessar",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black)),
+                          onPressed: () => changePassword(context),
+                        )),
               ],
             ),
           ),

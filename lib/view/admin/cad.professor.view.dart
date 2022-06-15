@@ -15,6 +15,11 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   bool valorManha = false;
   bool valorTarde = false;
   bool valorNoite = false;
+  bool loading = false;
+
+  var erro = false;
+  var sucesso = true;
+  var msgErro = '';
 
   var manha;
   var tarde;
@@ -33,6 +38,9 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   TextEditingController senha = TextEditingController();
 
   void enviarCadastro(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     var nomeText = nome.text;
     var emailText = email.text;
     var senhaText = '123456';
@@ -41,20 +49,36 @@ class _CadastroProfessor extends State<CadastroProfessor> {
 
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      var result = await auth.createUserWithEmailAndPassword(
-          email: emailText, password: senhaText);
+      sucesso = true;
+      var result;
+      try {
+        result = await auth.createUserWithEmailAndPassword(
+            email: emailText, password: senhaText);
+      } on FirebaseAuthException catch (e) {
+        erro = true;
+        sucesso = false;
+        setState(() {
+          loading = false;
+        });
+        switch (e.code) {
+          case 'email-already-in-use':
+            msgErro = 'Email Já utilizado';
+            break;
+        }
+      }
+      if (sucesso) {
+        erro = false;
+        await result.user!.updateDisplayName(nomeText);
+        await firestore.collection('professores').add({
+          "nomeCompleto": nomeText,
+          "email": emailText,
+          "senha": senhaText,
+          "turno": textoTurno,
+          "uid": result.user!.uid,
+        });
 
-      await result.user!.updateDisplayName(nomeText);
-
-      await firestore.collection('professores').add({
-        "nomeCompleto": nomeText,
-        "email": emailText,
-        "senhaCad": senhaText,
-        "turno": textoTurno,
-        "uid": result.user!.uid,
-      });
-
-      Navigator.of(context).pushReplacementNamed('/homeAdmin');
+        Navigator.of(context).pushReplacementNamed('/homeAdmin');
+      }
     }
   }
 
@@ -258,22 +282,36 @@ class _CadastroProfessor extends State<CadastroProfessor> {
                               ],
                             )),
                       ),
-                      Container(
-                          width: 326,
-                          height: 50,
-                          margin: EdgeInsets.only(top: 70, bottom: 0),
-                          decoration: const BoxDecoration(
-                              color: Color.fromARGB(255, 255, 245, 10),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: TextButton(
-                            child: const Text("Cadastrar",
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.black)),
-                            onPressed: () => enviarCadastro(context),
-                          )),
+                      loading
+                          ? const CircularProgressIndicator(
+                              color: Color.fromARGB(255, 235, 213, 16))
+                          : Container(
+                              width: 326,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 70, bottom: 0),
+                              decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 255, 245, 10),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
+                              child: TextButton(
+                                child: const Text("Cadastrar",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.black)),
+                                onPressed: () => enviarCadastro(context),
+                              )),
+                      erro
+                          ? Container(
+                              margin: EdgeInsets.only(top: 5),
+                              child: Text(msgErro,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                     ],
                   ),
                 ),

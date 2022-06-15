@@ -16,6 +16,10 @@ import 'professor/cad.exercicio.view.dart';
 import 'professor/exec.view.dart';
 import 'professor/cad.treino.view.dart';
 import 'professor/treino.view.dart';
+import 'professor/treinos/aluno.view.dart';
+import 'professor/treinos/exercicios.view.dart';
+import 'professor/treinos/plano.view.dart';
+import 'professor/treinos/plano.resumo.view.dart';
 
 import 'admin/alunos.view.dart';
 import 'admin/prof.view.dart';
@@ -50,8 +54,10 @@ class _App extends State<App> {
           '/profView': (context) => ProfessorView(),
           '/ponte': (context) => Ponte(),
           '/execView': (context) => ExercicioView(),
-          '/cadTreino': (context) => CadastroTreino(),
-          '/treinoView': (context) => TreinoView()
+          '/alunoTreino': (context) => AlunoTreino(),
+          '/exercicioTreino': (context) => ExercicioTreino(),
+          '/planoTreino': (context) => PlanoTreino(),
+          '/planoTreinoResumo': (context) => PlanoTreinoResumo(),
         },
         initialRoute: '/ponte');
   }
