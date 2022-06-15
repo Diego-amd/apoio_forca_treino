@@ -78,6 +78,8 @@ class _LoginView extends State<LoginView> {
       loading = true;
     });
 
+    erroUsuario = false;
+
     if (formKey.currentState!.validate()) {
       try {
         formKey.currentState!.save();
@@ -359,11 +361,12 @@ class _LoginView extends State<LoginView> {
                               )),
                       erroUsuario
                           ? Container(
-                              margin: EdgeInsets.only(top: 3, bottom: 0),
+                              margin: EdgeInsets.only(top: 5),
                               child: Text(msgUsuario,
                                   style: const TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 16,
                                     color: Colors.red,
+                                    fontWeight: FontWeight.w600,
                                   )),
                             )
                           : SizedBox(height: 0),

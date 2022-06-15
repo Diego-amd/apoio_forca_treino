@@ -18,34 +18,31 @@ class ExercicioView extends StatelessWidget {
           toolbarHeight: 80,
           title: Text("Listagem de exericios"),
           backgroundColor: Color.fromRGBO(6, 32, 41, 2),
-          elevation: 15,
+          elevation: 5,
           shadowColor: Color.fromRGBO(6, 32, 41, 2),
         ),
         body: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: firestore
-                .collection('exercicios')
-                .orderBy('tipo')
-                .snapshots(),
+            stream:
+                firestore.collection('exercicios').orderBy('tipo').snapshots(),
             builder: (_, snapshot) {
               if (!snapshot.hasData) return CircularProgressIndicator();
 
               if (snapshot.hasError) return Text("Erro ao carregar os dados");
 
               if (snapshot.data!.docs.length == 0) {
-              return Center(
-                  child: Container(
-                      child: Text(
-                'Nenhum exercicio ainda',
-                style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0), fontSize: 20),
-              )));
-            }
+                return Center(
+                    child: Container(
+                        child: Text(
+                  'Nenhum exercicio ainda',
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0), fontSize: 20),
+                )));
+              }
 
               return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int i) => ExercicioItem(
-                        ExercicioModel.fromMap(
-                            snapshot.data!.docs[i].data()),
+                        ExercicioModel.fromMap(snapshot.data!.docs[i].data()),
                       ));
             }),
         floatingActionButton: FloatingActionButton(
