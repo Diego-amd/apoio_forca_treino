@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+class AlteracaoSenha extends StatefulWidget {
+  @override
+  _AlteracaoSenha createState() => _AlteracaoSenha();
+}
 
 var txtsenha1 = 'senha';
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,10 +37,14 @@ bool validaSenha() {
   }
 }
 
-class AlteracaoSenha extends StatelessWidget {
+class _AlteracaoSenha extends State<AlteracaoSenha> {
   var formKey = GlobalKey<FormState>();
+  bool loading = false;
 
   void changePassword(BuildContext context) async {
+    setState(() {
+      loading = true;
+    });
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       var newPassword = camposenha.text;
@@ -69,6 +77,9 @@ class AlteracaoSenha extends StatelessWidget {
         });
       }).catchError((err) {});
     } else {
+      setState(() {
+        loading = false;
+      });
       print('Não passei');
     }
   }

@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Ponte extends StatelessWidget {
-  var home;
-  void verificaUsuario() {
-    //TODO verificar o prefs e redirecionar para home correta
-  }
+  var home = 0;
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> getPrefs(context) async {
     final prefs = await SharedPreferences.getInstance();
     print(prefs.getInt("tipoUsuario"));
     home = prefs.getInt('tipoUsuario') ?? 0;
     redirecionaHome(context);
+    if (auth.currentUser!.uid.isEmpty) {
+      home = 0;
+    }
   }
 
   void redirecionaHome(BuildContext context) {

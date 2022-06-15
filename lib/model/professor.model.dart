@@ -9,7 +9,7 @@ class ProfessorModel {
   ProfessorModel.fromMap(Map<String, dynamic> map) {
     nomeCompleto = map["nomeCompleto"];
     email = map["email"];
-    senha = map["senhaCad"];
+    senha = map["senha"];
     turno = map["turno"];
   }
 }

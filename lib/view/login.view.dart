@@ -74,11 +74,12 @@ class _LoginView extends State<LoginView> {
   }
 
   void save(BuildContext context) async {
+    sucesso = true;
+    erroUsuario = false;
+
     setState(() {
       loading = true;
     });
-
-    erroUsuario = false;
 
     if (formKey.currentState!.validate()) {
       try {
@@ -105,8 +106,9 @@ class _LoginView extends State<LoginView> {
             break;
         }
       }
-      // Buscar dados
-      sucesso ? validaLogin(context) : sucesso = false;
+      if (sucesso == true) {
+        validaLogin(context);
+      }
     }
   }
 
