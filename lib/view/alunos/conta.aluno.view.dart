@@ -7,7 +7,7 @@ import '../../model/aluno.model.dart';
 
 String nomeAluno = '';
 String nomeInicial = '';
-String docID = 'qFRhPDNvgC9vdtTXd42b';
+String? docID;
 
 class ContaAluno extends StatefulWidget {
   @override
@@ -31,6 +31,7 @@ class _ContaAluno extends State<ContaAluno> {
       if (documents.length == 1) {
         nomeAluno = await resultado.docs[0].data()['nomeCompleto'];
         nomeInicial = nomeAluno[0].toUpperCase();
+        var docID = firestore.collection("alunos").doc(resultado.docs[0].id);
         if (this.mounted) {
           setState(() {
             nomeAluno = nomeAluno;
@@ -38,10 +39,6 @@ class _ContaAluno extends State<ContaAluno> {
         }
       }
     }
-  }
-
-  void AlterarSenha(BuildContext context) {
-    Navigator.of(context).pushNamed('/alterarSenhaAln');
   }
 
   @override
@@ -95,10 +92,10 @@ class _ContaAluno extends State<ContaAluno> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black)),
-                          onPressed: () => modalCreate(context),
+                          onPressed: () => alterarNome(context),
                         )),
                     Container(
-                        width: 156,
+                        width: 250,
                         height: 50,
                         margin: EdgeInsets.only(top: 20, bottom: 0),
                         decoration: const BoxDecoration(
@@ -106,12 +103,12 @@ class _ContaAluno extends State<ContaAluno> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: TextButton(
-                          child: const Text("Alterar Senha",
+                          child: const Text("Alterar Data de nascimento",
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black)),
-                          onPressed: () => AlterarSenha(context),
+                          onPressed: () => alterarDataNascimento(context),
                         )),
                     Container(
                         width: 106,
@@ -135,7 +132,88 @@ class _ContaAluno extends State<ContaAluno> {
         ));
   }
 
-  modalCreate(BuildContext context) {
+  alterarDataNascimento(BuildContext context) {
+    var form = GlobalKey<FormState>();
+    var nasc = TextEditingController();
+
+    var dataNasc = nasc;
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.only(top: 5.0),
+          backgroundColor: Colors.white,
+          title: Column(
+            children: [
+              const Text(
+                "Alterar Nome",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20,
+                ),
+              ),
+              TextFormField(
+                controller: nasc,
+                onSaved: (value) => {},
+                keyboardType: TextInputType.datetime,
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: "Data nascimento",
+                  icon: Icon(Icons.calendar_month,
+                      size: 20, color: Colors.black38),
+                  labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16),
+                ),
+                style: TextStyle(fontSize: 14),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            Container(
+              margin: const EdgeInsets.only(top: 0),
+              child: TextButton(
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.only(top: 0),
+              child: TextButton(
+                child: const Text(
+                  'Salvar',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+                onPressed: () {
+                  {
+                    final dataNasc = FirebaseFirestore.instance
+                        .collection('alunos')
+                        .doc(docID)
+                        .update({
+                      'nomeCompleto': nasc.text,
+                    });
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  alterarNome(BuildContext context) {
     var form = GlobalKey<FormState>();
     var nome = TextEditingController();
 
@@ -159,7 +237,7 @@ class _ContaAluno extends State<ContaAluno> {
                 key: form,
                 decoration: InputDecoration(labelText: 'nome'),
                 style: TextStyle(
-                  color: Colors.red,
+                  color: Color.fromARGB(255, 0, 0, 0),
                   fontSize: 18,
                 ),
                 controller: nomeAluno,
