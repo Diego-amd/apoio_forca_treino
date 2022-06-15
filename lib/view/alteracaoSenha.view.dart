@@ -16,11 +16,8 @@ var colecao = '';
 void recebePrefs(BuildContext context) async {
   final objArgs = (ModalRoute.of(context)?.settings.arguments ??
       <String, dynamic>{}) as Map;
-  print('heiter');
   colecao = objArgs['colecao'];
   documento = objArgs['documento'];
-  print(documento);
-  print(colecao);
 }
 
 TextEditingController camposenha = TextEditingController();
@@ -28,8 +25,6 @@ TextEditingController campoconfirmaSenha = TextEditingController();
 bool validaSenha() {
   var senha = camposenha.text;
   var senha2 = campoconfirmaSenha.text;
-  print(senha);
-  print(senha2);
   if (senha == senha2) {
     return true;
   } else {
@@ -58,9 +53,7 @@ class _AlteracaoSenha extends State<AlteracaoSenha> {
           firestore
               .collection(colecao.toString())
               .doc(documento.toString())
-              .update({'senha': camposenha.text})
-              .then((_) => print('deu certo'))
-              .catchError((error) => print('DEU TUDO ERRADO AAAAAAAA'));
+              .update({'senha': camposenha.text});
           switch (colecao) {
             case 'alunos':
               Navigator.of(context).pushReplacementNamed('/homeAluno');
@@ -80,7 +73,6 @@ class _AlteracaoSenha extends State<AlteracaoSenha> {
       setState(() {
         loading = false;
       });
-      print('Não passei');
     }
   }
 
