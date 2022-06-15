@@ -16,8 +16,11 @@ class _CadastroAlunoState extends State<CadastroAluno> {
   int checkedSexo = -1;
 
   TextEditingController nome = TextEditingController();
+  TextEditingController datanasc = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController senha = TextEditingController();
+  TextEditingController altura = TextEditingController();
+  TextEditingController peso = TextEditingController();
 
   void enviarCadastro(BuildContext context) async {
     setState(() {
@@ -25,7 +28,10 @@ class _CadastroAlunoState extends State<CadastroAluno> {
     });
     var nomeText = nome.text;
     var emailText = email.text;
+    var datanascText = datanasc.text;
     var senhaText = '123456';
+    var alturaText = altura.text;
+    var pesoText = peso.text;
 
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -36,10 +42,13 @@ class _CadastroAlunoState extends State<CadastroAluno> {
 
       await firestore.collection('alunos').add({
         "nomeCompleto": nomeText,
+        "datanasc": datanascText,
         "email": emailText,
         "senha": senhaText,
         "ativo": true,
         "sexo": checkedSexo == 1 ? "Feminino" : "Masculino",
+        "altura": alturaText,
+        "peso": pesoText,
         "uid": result.user!.uid,
       });
 
@@ -92,7 +101,7 @@ class _CadastroAlunoState extends State<CadastroAluno> {
                           width: 326,
                           height: 50,
                           padding: EdgeInsets.only(left: 16),
-                          margin: EdgeInsets.only(top: 150),
+                          margin: EdgeInsets.only(top: 50),
                           decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius:
@@ -145,6 +154,34 @@ class _CadastroAlunoState extends State<CadastroAluno> {
                               border: InputBorder.none,
                               hintText: "E-mail",
                               icon: Icon(Icons.email,
+                                  size: 20, color: Colors.black38),
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
+                            controller: datanasc,
+                            onSaved: (value) => {},
+                            keyboardType: TextInputType.datetime,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Data nascimento",
+                              icon: Icon(Icons.calendar_month,
                                   size: 20, color: Colors.black38),
                               labelStyle: TextStyle(
                                   color: Colors.black,
@@ -236,13 +273,69 @@ class _CadastroAlunoState extends State<CadastroAluno> {
                               ),
                             )),
                       ),
+                      SizedBox(
+                        child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
+                            controller: altura,
+                            onSaved: (value) => {},
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Altura, Ex: 1,75",
+                              icon: Icon(Icons.height,
+                                  size: 20, color: Colors.black38),
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        child: Container(
+                          width: 326,
+                          height: 50,
+                          margin: EdgeInsets.only(top: 20),
+                          padding: EdgeInsets.only(left: 16),
+                          decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: TextFormField(
+                            controller: peso,
+                            onSaved: (value) => {},
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              hintText: "Peso, Ex: 75",
+                              icon: Icon(Icons.sports,
+                                  size: 20, color: Colors.black38),
+                              labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
                       loading
                           ? const CircularProgressIndicator(
                               color: Color.fromARGB(255, 235, 213, 16))
                           : Container(
                               width: 326,
                               height: 50,
-                              margin: EdgeInsets.only(top: 70, bottom: 0),
+                              margin: EdgeInsets.only(top: 30, bottom: 0),
                               decoration: const BoxDecoration(
                                   color: Color.fromARGB(255, 255, 245, 10),
                                   borderRadius:

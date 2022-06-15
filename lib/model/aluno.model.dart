@@ -1,17 +1,22 @@
 class AlunoModel {
   String? nomeCompleto;
+  DateTime? datanasc;
   String? email = '';
   String? senha = '';
-  bool? ativo = true;
+  num? altura = 0.0;
+  num? peso = 0.0;
   String? sexo = '';
 
-  AlunoModel(this.nomeCompleto, this.email, this.senha, this.ativo, this.sexo);
+  AlunoModel(this.nomeCompleto, this.datanasc, this.email, this.senha,
+      this.altura, this.peso, this.sexo);
 
   AlunoModel.fromMap(Map<String, dynamic> map) {
     nomeCompleto = map["nomeCompleto"];
+    datanasc = map["datanasc"];
     email = map["email"];
     senha = map["senha"];
-    ativo = map["ativo"];
+    altura = map["altura"];
+    peso = map["peso"];
     sexo = map["sexo"];
   }
 }
