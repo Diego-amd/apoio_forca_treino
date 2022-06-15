@@ -66,7 +66,7 @@ class _AlteracaoSenha extends State<AlteracaoSenha> {
               Navigator.of(context).pushReplacementNamed('/homeAluno');
               break;
             case 'professores':
-              Navigator.of(context).pushReplacementNamed('/homeProfessores');
+              Navigator.of(context).pushReplacementNamed('/homeProfessor');
               break;
             case 'admin':
               Navigator.of(context).pushReplacementNamed('/homeAdmin');
@@ -189,21 +189,25 @@ class _AlteracaoSenha extends State<AlteracaoSenha> {
                         ],
                       )),
                 ),
-                Container(
-                    width: 326,
-                    height: 50,
-                    margin: EdgeInsets.only(top: 160, bottom: 0, left: 35),
-                    decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 255, 245, 10),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: TextButton(
-                      child: const Text("Acessar",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black)),
-                      onPressed: () => changePassword(context),
-                    )),
+                loading
+                    ? const CircularProgressIndicator(
+                        color: Color.fromARGB(255, 235, 213, 16))
+                    : Container(
+                        width: 326,
+                        height: 50,
+                        margin: EdgeInsets.only(top: 160, bottom: 0, left: 35),
+                        decoration: const BoxDecoration(
+                            color: Color.fromARGB(255, 255, 245, 10),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: TextButton(
+                          child: const Text("Acessar",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.black)),
+                          onPressed: () => changePassword(context),
+                        )),
               ],
             ),
           ),

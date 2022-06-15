@@ -17,6 +17,10 @@ class _CadastroProfessor extends State<CadastroProfessor> {
   bool valorNoite = false;
   bool loading = false;
 
+  var erro = false;
+  var sucesso = true;
+  var msgErro = '';
+
   var manha;
   var tarde;
   var noite;
@@ -45,20 +49,36 @@ class _CadastroProfessor extends State<CadastroProfessor> {
 
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      var result = await auth.createUserWithEmailAndPassword(
-          email: emailText, password: senhaText);
+      sucesso = true;
+      var result;
+      try {
+        result = await auth.createUserWithEmailAndPassword(
+            email: emailText, password: senhaText);
+      } on FirebaseAuthException catch (e) {
+        erro = true;
+        sucesso = false;
+        setState(() {
+          loading = false;
+        });
+        switch (e.code) {
+          case 'email-already-in-use':
+            msgErro = 'Email Já utilizado';
+            break;
+        }
+      }
+      if (sucesso) {
+        erro = false;
+        await result.user!.updateDisplayName(nomeText);
+        await firestore.collection('professores').add({
+          "nomeCompleto": nomeText,
+          "email": emailText,
+          "senha": senhaText,
+          "turno": textoTurno,
+          "uid": result.user!.uid,
+        });
 
-      await result.user!.updateDisplayName(nomeText);
-
-      await firestore.collection('professores').add({
-        "nomeCompleto": nomeText,
-        "email": emailText,
-        "senhaCad": senhaText,
-        "turno": textoTurno,
-        "uid": result.user!.uid,
-      });
-
-      Navigator.of(context).pushReplacementNamed('/homeAdmin');
+        Navigator.of(context).pushReplacementNamed('/homeAdmin');
+      }
     }
   }
 
@@ -281,6 +301,17 @@ class _CadastroProfessor extends State<CadastroProfessor> {
                                         color: Colors.black)),
                                 onPressed: () => enviarCadastro(context),
                               )),
+                      erro
+                          ? Container(
+                              margin: EdgeInsets.only(top: 5),
+                              child: Text(msgErro,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w600,
+                                  )),
+                            )
+                          : SizedBox(height: 0),
                     ],
                   ),
                 ),
