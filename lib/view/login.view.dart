@@ -92,8 +92,6 @@ class _LoginView extends State<LoginView> {
         setState(() {
           loading = false;
         });
-        print('OIEE, DEU ERRO');
-        print(e);
         switch (e.code) {
           case 'invalid-email':
             msgUsuario = 'Email invalido';
@@ -113,7 +111,6 @@ class _LoginView extends State<LoginView> {
   }
 
   chamarProfessor() async {
-    print('Entrou Professor');
     final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
         firestore
             .collection("professores")
@@ -125,7 +122,6 @@ class _LoginView extends State<LoginView> {
       documento = resultado.docs[0].id;
       var senha = await resultado.docs[0].data()['senha'];
       if (senha == '123456') {
-        print(senha);
         return home = 4;
       } else {
         return home = 2;
@@ -135,7 +131,6 @@ class _LoginView extends State<LoginView> {
   }
 
   chamarAluno() async {
-    print('Entrou Aluno');
     final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
         firestore
             .collection("alunos")
@@ -157,7 +152,6 @@ class _LoginView extends State<LoginView> {
   }
 
   chamarAdmin() async {
-    print('Entrou Admin');
     final QuerySnapshot<Map<String, dynamic>> resultado = await Future.value(
         firestore
             .collection("admin")
